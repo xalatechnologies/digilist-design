@@ -1,7 +1,130 @@
+@import "@navikt/ds-css/dist/index.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Override designsystemet.no dark mode text colors */
+[data-theme="dark"] .navds-tag {
+  color: white !important;
+}
+
+/* Tab styling to match design - light gray background container */
+.navds-tabs__tablist {
+  background-color: #F5F5F4 !important; /* stone-100 */
+  border-radius: 0.5rem !important;
+  padding: 0.25rem !important;
+  gap: 0.25rem !important;
+  width: 100% !important;
+  display: flex !important;
+  max-width: 100% !important;
+}
+
+[data-theme="dark"] .navds-tabs__tablist {
+  background-color: #292524 !important; /* stone-800 */
+}
+
+/* Inactive tabs - dark gray text */
+.navds-tabs__tab {
+  color: #57534E !important; /* stone-600 */
+  background-color: transparent !important;
+  border-radius: 0.375rem !important;
+  padding: 0.5rem 1rem !important;
+  border: none !important;
+  transition: all 0.2s !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+[data-theme="dark"] .navds-tabs__tab {
+  color: #A8A29E !important; /* stone-400 */
+}
+
+/* Active tab - dark blue background with white text (pill style) */
+.navds-tabs__tab[aria-selected="true"] {
+  color: white !important;
+  background-color: #33649E !important;
+  border: none !important;
+}
+
+[data-theme="dark"] .navds-tabs__tab[aria-selected="true"] {
+  color: white !important;
+  background-color: #33649E !important;
+}
+
 @custom-variant dark (&:is(.dark *));
+
+/* Brand blue color utilities - matches tab color #33649E */
+.bg-brand-blue {
+  background-color: #33649E !important;
+}
+
+.text-brand-blue {
+  color: #33649E !important;
+}
+
+.border-brand-blue {
+  border-color: #33649E !important;
+}
+
+.ring-brand-blue {
+  --tw-ring-color: #33649E;
+}
+
+.hover\:bg-brand-blue:hover {
+  background-color: #2C5688 !important; /* Slightly darker on hover */
+}
+
+.dark .bg-brand-blue {
+  background-color: #33649E !important;
+}
+
+.dark .text-brand-blue {
+  color: #33649E !important;
+}
+
+/* Brand blue variants for different shades */
+.bg-brand-blue-light {
+  background-color: #E6EEF7 !important; /* color.primary.subtle */
+}
+
+.text-brand-blue-dark {
+  color: #2C5688 !important; /* color.primary.hover */
+}
+
+.bg-brand-blue-dark {
+  background-color: #2C5688 !important; /* color.primary.hover for hover state */
+}
+
+.bg-brand-blue-active {
+  background-color: #24496F !important; /* color.primary.active */
+}
+
+/* Designsystemet.no Button primary variant override */
+.navds-button--primary {
+  background-color: #33649E !important;
+  color: white !important;
+  border-color: #33649E !important;
+}
+
+.navds-button--primary:hover {
+  background-color: #2C5688 !important;
+  border-color: #2C5688 !important;
+}
+
+.navds-button--primary:active {
+  background-color: #24496F !important;
+  border-color: #24496F !important;
+}
+
+[data-theme="dark"] .navds-button--primary {
+  background-color: #33649E !important;
+  color: white !important;
+}
+
+[data-theme="dark"] .navds-button--primary:hover {
+  background-color: #2C5688 !important;
+}
 
 /*
   Design OS - Refined Utility Design System

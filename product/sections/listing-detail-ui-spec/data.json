@@ -1,0 +1,140 @@
+{
+  "_meta": {
+    "description": "Component-level example data for Listing Detail UI Spec",
+    "purpose": "Illustrates generic data structure for UI components"
+  },
+  "images": {
+    "hero": {
+      "url": "/images/listing-hero.jpg",
+      "alt": "Listing primary image",
+      "width": 1200,
+      "height": 800
+    },
+    "thumbnails": [
+      {
+        "url": "/images/listing-thumb-1.jpg",
+        "alt": "Listing thumbnail 1",
+        "width": 300,
+        "height": 200
+      },
+      {
+        "url": "/images/listing-thumb-2.jpg",
+        "alt": "Listing thumbnail 2",
+        "width": 300,
+        "height": 200
+      },
+      {
+        "url": "/images/listing-thumb-3.jpg",
+        "alt": "Listing thumbnail 3",
+        "width": 300,
+        "height": 200
+      }
+    ]
+  },
+  "facilities": [
+    {
+      "id": "facility-001",
+      "label": "Projektor",
+      "icon": "Projector"
+    },
+    {
+      "id": "facility-002",
+      "label": "Tavle",
+      "icon": "Presentation"
+    },
+    {
+      "id": "facility-003",
+      "label": "WiFi",
+      "icon": "Wifi"
+    },
+    {
+      "id": "facility-004",
+      "label": "Videokonferanse",
+      "icon": "Video"
+    }
+  ],
+  "openingHours": {
+    "mondayFriday": "08:00 - 22:00",
+    "saturday": "09:00 - 20:00",
+    "sunday": "10:00 - 18:00"
+  },
+  "calendar": {
+    "currentWeek": {
+      "startDate": "2026-01-12",
+      "endDate": "2026-01-18",
+      "days": [
+        {
+          "date": "2026-01-12",
+          "label": "MAN 12",
+          "isToday": true
+        },
+        {
+          "date": "2026-01-13",
+          "label": "TIR 13",
+          "isToday": false
+        },
+        {
+          "date": "2026-01-14",
+          "label": "ONS 14",
+          "isToday": false
+        },
+        {
+          "date": "2026-01-15",
+          "label": "TOR 15",
+          "isToday": false
+        },
+        {
+          "date": "2026-01-16",
+          "label": "FRE 16",
+          "isToday": false
+        },
+        {
+          "date": "2026-01-17",
+          "label": "LØR 17",
+          "isToday": false
+        },
+        {
+          "date": "2026-01-18",
+          "label": "SØN 18",
+          "isToday": false
+        }
+      ]
+    },
+    "timeSlots": [
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00",
+      "13:00",
+      "14:00",
+      "15:00",
+      "16:00"
+    ],
+    "availability": {
+      "2026-01-12-08:00": "unavailable",
+      "2026-01-12-09:00": "booked",
+      "2026-01-12-10:00": "available",
+      "2026-01-12-11:00": "available",
+      "2026-01-13-08:00": "available",
+      "2026-01-13-09:00": "available"
+    }
+  },
+  "states": {
+    "loading": {
+      "imageGallery": false,
+      "calendar": false,
+      "content": false
+    },
+    "empty": {
+      "availability": false,
+      "selectedTimes": true
+    },
+    "interactive": {
+      "hover": "button-primary",
+      "focus": "search-input",
+      "active": "tab-oversikt",
+      "selected": []
+    }
+  }
+}

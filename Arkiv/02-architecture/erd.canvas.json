@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "entities": [
+    {
+      "id": "618379d5-0b0c-446b-b03f-9ffa9dc67d5d",
+      "name": "Entity1",
+      "fields": [
+        {
+          "id": "cbdeec23-83af-459c-ae10-e6475f922184",
+          "name": "id",
+          "type": "String",
+          "attributes": {
+            "isId": true,
+            "isUnique": true,
+            "isOptional": false,
+            "isArray": false,
+            "defaultValue": "cuid()"
+          }
+        },
+        {
+          "id": "4836e767-23df-4e47-ad8f-8fa7747f7d45",
+          "name": "field2",
+          "type": "BigInt",
+          "attributes": {
+            "isId": false,
+            "isUnique": false,
+            "isOptional": false,
+            "isArray": false
+          }
+        }
+      ],
+      "color": "#3b82f6"
+    }
+  ],
+  "relationships": [],
+  "layout": {
+    "nodes": [
+      {
+        "id": "618379d5-0b0c-446b-b03f-9ffa9dc67d5d",
+        "x": -208,
+        "y": -48
+      }
+    ],
+    "viewport": {
+      "x": 672,
+      "y": 326,
+      "zoom": 2
+    }
+  }
+}

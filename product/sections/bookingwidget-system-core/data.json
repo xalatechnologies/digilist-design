@@ -1,0 +1,233 @@
+{
+  "description": "Sample data for BookingWidget System - one normal case per booking model with time policy constraints",
+  "bookingModels": {
+    "TIME_RANGE": {
+      "example": {
+        "listingId": "listing-time-range-001",
+        "listingTitle": "Community Sports Hall",
+        "bookingModel": "TIME_RANGE",
+        "timePolicy": {
+          "slotSize": 30,
+          "minDuration": 60,
+          "maxDuration": 240,
+          "leadTime": 1440,
+          "maxAdvance": 90,
+          "bufferBefore": 15,
+          "bufferAfter": 15,
+          "checkInTime": 10,
+          "checkOutTime": 10
+        },
+        "pricing": {
+          "chargeUnit": "HOUR",
+          "basePrice": 500,
+          "currency": "NOK"
+        },
+        "availability": {
+          "weekdays": {
+            "start": "18:00",
+            "end": "22:00"
+          },
+          "weekends": {
+            "start": "10:00",
+            "end": "20:00"
+          }
+        },
+        "bookableUnits": [
+          {
+            "id": "unit-001",
+            "name": "Main Hall",
+            "available": true
+          }
+        ]
+      }
+    },
+    "SLOT": {
+      "example": {
+        "listingId": "listing-slot-001",
+        "listingTitle": "Morning Yoga Class",
+        "bookingModel": "SLOT",
+        "timePolicy": {
+          "slotSize": 60,
+          "leadTime": 2880,
+          "maxAdvance": 30
+        },
+        "pricing": {
+          "chargeUnit": "UNIT",
+          "basePrice": 150,
+          "currency": "NOK"
+        },
+        "slots": [
+          {
+            "id": "slot-09",
+            "time": "09:00",
+            "duration": 60,
+            "capacity": 20,
+            "available": true
+          },
+          {
+            "id": "slot-10",
+            "time": "10:00",
+            "duration": 60,
+            "capacity": 20,
+            "available": true
+          },
+          {
+            "id": "slot-11",
+            "time": "11:00",
+            "duration": 60,
+            "capacity": 20,
+            "available": false
+          }
+        ],
+        "availability": {
+          "days": ["monday", "wednesday", "friday"]
+        }
+      }
+    },
+    "ALL_DAY": {
+      "example": {
+        "listingId": "listing-all-day-001",
+        "listingTitle": "Conference Room A",
+        "bookingModel": "ALL_DAY",
+        "timePolicy": {
+          "minDuration": 1,
+          "maxDuration": 7,
+          "leadTime": 4320,
+          "maxAdvance": 180
+        },
+        "pricing": {
+          "chargeUnit": "DAY",
+          "basePrice": 2000,
+          "currency": "NOK"
+        },
+        "availability": {
+          "blockedDates": ["2025-01-20", "2025-01-21"],
+          "seasonalBlocks": [
+            {
+              "start": "2025-12-20",
+              "end": "2026-01-05",
+              "reason": "Holiday closure"
+            }
+          ]
+        }
+      }
+    },
+    "QUANTITY": {
+      "example": {
+        "listingId": "listing-quantity-001",
+        "listingTitle": "Basketball Set",
+        "bookingModel": "QUANTITY",
+        "timePolicy": {
+          "leadTime": 1440,
+          "maxAdvance": 30
+        },
+        "pricing": {
+          "chargeUnit": "UNIT",
+          "basePrice": 200,
+          "currency": "NOK"
+        },
+        "availability": {
+          "totalStock": 10,
+          "availableStock": 7,
+          "timeBound": false
+        }
+      }
+    },
+    "CAPACITY": {
+      "example": {
+        "listingId": "listing-capacity-001",
+        "listingTitle": "Workshop: Digital Skills",
+        "bookingModel": "CAPACITY",
+        "timePolicy": {
+          "leadTime": 4320,
+          "maxAdvance": 60
+        },
+        "pricing": {
+          "chargeUnit": "UNIT",
+          "basePrice": 500,
+          "currency": "NOK"
+        },
+        "availability": {
+          "totalCapacity": 30,
+          "availableCapacity": 12,
+          "date": "2025-02-15",
+          "time": "14:00"
+        }
+      }
+    },
+    "PACKAGE": {
+      "example": {
+        "listingId": "listing-package-001",
+        "listingTitle": "Event Package: Summer Festival",
+        "bookingModel": "PACKAGE",
+        "timePolicy": {
+          "leadTime": 8640,
+          "maxAdvance": 180
+        },
+        "pricing": {
+          "chargeUnit": "PACKAGE",
+          "basePrice": 0,
+          "currency": "NOK"
+        },
+        "packages": [
+          {
+            "id": "package-basic",
+            "name": "Basic Package",
+            "price": 5000,
+            "available": true,
+            "includes": ["Venue access", "Basic equipment"]
+          },
+          {
+            "id": "package-premium",
+            "name": "Premium Package",
+            "price": 8000,
+            "available": true,
+            "includes": ["Venue access", "Premium equipment", "Catering"]
+          },
+          {
+            "id": "package-deluxe",
+            "name": "Deluxe Package",
+            "price": 12000,
+            "available": false,
+            "includes": ["Venue access", "Premium equipment", "Catering", "Entertainment"]
+          }
+        ],
+        "availability": {
+          "date": "2025-07-15"
+        }
+      }
+    }
+  },
+  "errorScenarios": {
+    "leadTimeViolation": {
+      "description": "User tries to book less than required lead time",
+      "errorMessage": "Bookings must be made at least 24 hours in advance",
+      "earliestAvailable": "2025-01-14T10:00:00Z"
+    },
+    "maxAdvanceViolation": {
+      "description": "User tries to book beyond max advance period",
+      "errorMessage": "Bookings can only be made up to 90 days in advance",
+      "latestAvailable": "2025-04-12T00:00:00Z"
+    },
+    "durationViolation": {
+      "description": "User selects duration outside min/max range",
+      "errorMessage": "Booking duration must be between 1 and 4 hours",
+      "validRange": {
+        "min": 60,
+        "max": 240
+      }
+    },
+    "capacityExceeded": {
+      "description": "User selects quantity/capacity exceeding availability",
+      "errorMessage": "Only 7 units available",
+      "available": 7,
+      "requested": 10
+    },
+    "slotUnavailable": {
+      "description": "User selects unavailable slot",
+      "errorMessage": "This slot is fully booked",
+      "slotId": "slot-11",
+      "availableCapacity": 0
+    }
+  }
+}

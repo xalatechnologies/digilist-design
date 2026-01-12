@@ -1,0 +1,92 @@
+{
+  "description": "Sample data for Public Information Architecture section - illustrative examples only",
+  "exampleListing": {
+    "id": "listing-001",
+    "title": "Community Sports Hall",
+    "type": "SPACE",
+    "bookingModel": "TIME_RANGE",
+    "location": {
+      "city": "Oslo",
+      "district": "Grunerløkka",
+      "address": "Storgata 1, 0182 Oslo"
+    },
+    "capacity": 50,
+    "pricePerHour": 500,
+    "currency": "NOK",
+    "availability": {
+      "weekdays": {
+        "start": "18:00",
+        "end": "22:00"
+      },
+      "weekends": {
+        "start": "10:00",
+        "end": "20:00"
+      }
+    }
+  },
+  "exampleBookingJourney": {
+    "scenario1": {
+      "name": "TIME_RANGE Booking",
+      "steps": [
+        "User searches for 'sports hall' in Oslo",
+        "Finds 'Community Sports Hall' in results",
+        "Clicks listing → Listing Detail page",
+        "Views images, description, rules",
+        "BookingWidget shows TIME_RANGE interface (date/time pickers)",
+        "Selects: 2025-01-15, 19:00-21:00",
+        "Reviews pricing: 2 hours × 500 NOK = 1000 NOK",
+        "Clicks 'Book now'",
+        "Redirected to Confirmation page",
+        "Sees booking confirmation with receipt",
+        "Clicks 'View in My Bookings'",
+        "Sees booking in My Bookings list"
+      ]
+    },
+    "scenario2": {
+      "name": "SLOT Booking",
+      "listing": "Morning Yoga Class",
+      "bookingModel": "SLOT",
+      "steps": [
+        "User searches 'fitness class'",
+        "Views 'Morning Yoga Class'",
+        "BookingWidget shows: Date picker + Slot selector (09:00, 10:00, 11:00)",
+        "Selects date (2025-01-20) + slot (10:00)",
+        "Booking confirmed, shows slot details",
+        "Booking appears in My Bookings with status 'Confirmed'"
+      ]
+    },
+    "scenario3": {
+      "name": "QUANTITY Booking",
+      "listing": "Basketball Set",
+      "bookingModel": "QUANTITY",
+      "steps": [
+        "User searches 'sports equipment'",
+        "Views 'Basketball Set'",
+        "BookingWidget shows: Quantity input (1-10 available)",
+        "Selects quantity (3 sets)",
+        "Booking confirmed, shows quantity and total price",
+        "Booking appears with quantity details"
+      ]
+    }
+  },
+  "navigationExamples": {
+    "searchToDetail": {
+      "from": "Search/Results",
+      "to": "Listing Detail",
+      "method": "Click listing card",
+      "preservesFilters": true
+    },
+    "detailToConfirmation": {
+      "from": "Listing Detail",
+      "to": "Confirmation/Receipt",
+      "method": "Complete booking via BookingWidget",
+      "preservesBookingId": true
+    },
+    "confirmationToMyBookings": {
+      "from": "Confirmation/Receipt",
+      "to": "My Bookings",
+      "method": "Click 'View in My Bookings' link",
+      "highlightsBooking": true
+    }
+  }
+}

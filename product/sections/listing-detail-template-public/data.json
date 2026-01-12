@@ -1,0 +1,128 @@
+{
+  "description": "Sample data for Listing Detail Template - one listing with one bookable unit, one booking model, one time policy",
+  "listing": {
+    "id": "listing-001",
+    "title": "Community Sports Hall",
+    "type": "SPACE",
+    "description": "A modern, well-equipped sports hall perfect for various activities including basketball, volleyball, badminton, and fitness classes. The hall features high ceilings, professional flooring, and excellent lighting.",
+    "location": {
+      "address": "Storgata 1",
+      "postalCode": "0182",
+      "city": "Oslo",
+      "district": "Grunerløkka",
+      "coordinates": {
+        "lat": 59.9233,
+        "lng": 10.7526
+      }
+    },
+    "images": [
+      {
+        "id": "img-001",
+        "url": "/images/sports-hall-1.jpg",
+        "alt": "Main view of sports hall",
+        "primary": true
+      },
+      {
+        "id": "img-002",
+        "url": "/images/sports-hall-2.jpg",
+        "alt": "Sports hall from side angle",
+        "primary": false
+      },
+      {
+        "id": "img-003",
+        "url": "/images/sports-hall-3.jpg",
+        "alt": "Sports hall equipment",
+        "primary": false
+      }
+    ],
+    "capacity": 50,
+    "amenities": [
+      "Parking",
+      "Accessible entrance",
+      "Changing rooms",
+      "Showers",
+      "Equipment storage",
+      "WiFi"
+    ],
+    "accessibility": {
+      "wheelchairAccessible": true,
+      "accessibleToilets": true,
+      "hearingLoop": false,
+      "signLanguage": false
+    },
+    "rules": [
+      "No smoking",
+      "No alcohol",
+      "Sports shoes required",
+      "Respect other users",
+      "Clean up after use"
+    ],
+    "openingHours": {
+      "weekdays": {
+        "start": "18:00",
+        "end": "22:00"
+      },
+      "weekends": {
+        "start": "10:00",
+        "end": "20:00"
+      }
+    },
+    "contact": {
+      "phone": "+47 12 34 56 78",
+      "email": "sports@municipality.no",
+      "website": "https://municipality.no/sports"
+    },
+    "bookableUnits": [
+      {
+        "id": "unit-001",
+        "name": "Main Hall",
+        "available": true
+      }
+    ],
+    "bookingModel": "TIME_RANGE",
+    "timePolicy": {
+      "slotSize": 30,
+      "minDuration": 60,
+      "maxDuration": 240,
+      "leadTime": 1440,
+      "maxAdvance": 90,
+      "bufferBefore": 15,
+      "bufferAfter": 15,
+      "checkInTime": 10,
+      "checkOutTime": 10
+    },
+    "pricing": {
+      "chargeUnit": "HOUR",
+      "basePrice": 500,
+      "currency": "NOK",
+      "actorTypePricing": {
+        "individual": 500,
+        "organization": 450,
+        "municipality": 400
+      }
+    },
+    "availability": {
+      "weekdays": {
+        "start": "18:00",
+        "end": "22:00"
+      },
+      "weekends": {
+        "start": "10:00",
+        "end": "20:00"
+      },
+      "blockedDates": [],
+      "maintenancePeriods": [
+        {
+          "start": "2025-01-20T00:00:00Z",
+          "end": "2025-01-21T23:59:59Z",
+          "reason": "Annual maintenance"
+        }
+      ]
+    },
+    "requireApproval": false,
+    "rating": {
+      "average": 4.5,
+      "count": 23
+    }
+  }
+}

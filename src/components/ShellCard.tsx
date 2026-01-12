@@ -61,7 +61,7 @@ export function ShellCard({ shell }: ShellCardProps) {
         )}
 
         {/* View Shell Design Link */}
-        {shell.hasComponents && (
+        {shell.spec && (
           <div className="pt-2 border-t border-stone-100 dark:border-stone-800">
             <Link
               to="/shell/design"
@@ -72,7 +72,7 @@ export function ShellCard({ shell }: ShellCardProps) {
                   <Layout className="w-4 h-4 text-stone-600 dark:text-stone-300" strokeWidth={1.5} />
                 </div>
                 <span className="font-medium text-stone-700 dark:text-stone-300 group-hover:text-stone-900 dark:group-hover:text-stone-100">
-                  View Shell Design
+                  {shell.hasComponents ? 'View Shell Design' : 'Design Shell Components'}
                 </span>
               </div>
               <ChevronRight className="w-4 h-4 text-stone-400 dark:text-stone-500" strokeWidth={1.5} />

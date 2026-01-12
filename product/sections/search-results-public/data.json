@@ -1,0 +1,190 @@
+{
+  "description": "Sample data for Search & Results - 5-6 listings with different types, booking models, and availability",
+  "listings": [
+    {
+      "id": "listing-001",
+      "title": "Community Sports Hall",
+      "type": "SPACE",
+      "bookingModel": "TIME_RANGE",
+      "location": {
+        "city": "Oslo",
+        "district": "Grunerløkka",
+        "address": "Storgata 1, 0182 Oslo"
+      },
+      "image": "/images/sports-hall.jpg",
+      "price": {
+        "from": 500,
+        "currency": "NOK",
+        "unit": "hour"
+      },
+      "capacity": 50,
+      "amenities": ["Parking", "Accessible", "Changing rooms", "WiFi"],
+      "availability": {
+        "status": "available",
+        "nextAvailable": null,
+        "availableNow": true
+      },
+      "rating": {
+        "average": 4.5,
+        "count": 23
+      }
+    },
+    {
+      "id": "listing-002",
+      "title": "Morning Yoga Class",
+      "type": "EVENT",
+      "bookingModel": "SLOT",
+      "location": {
+        "city": "Oslo",
+        "district": "Sagene",
+        "address": "Trondheimsveien 10, 0560 Oslo"
+      },
+      "image": "/images/yoga-class.jpg",
+      "price": {
+        "from": 150,
+        "currency": "NOK",
+        "unit": "class"
+      },
+      "capacity": 20,
+      "amenities": ["Accessible", "Equipment provided"],
+      "availability": {
+        "status": "available",
+        "nextAvailable": "2025-01-15T09:00:00Z",
+        "availableNow": false
+      },
+      "rating": {
+        "average": 4.8,
+        "count": 45
+      }
+    },
+    {
+      "id": "listing-003",
+      "title": "Conference Room A",
+      "type": "SPACE",
+      "bookingModel": "ALL_DAY",
+      "location": {
+        "city": "Oslo",
+        "district": "Sentrum",
+        "address": "Karl Johans gate 1, 0162 Oslo"
+      },
+      "image": "/images/conference-room.jpg",
+      "price": {
+        "from": 2000,
+        "currency": "NOK",
+        "unit": "day"
+      },
+      "capacity": 30,
+      "amenities": ["Parking", "Accessible", "WiFi", "Projector", "Catering"],
+      "availability": {
+        "status": "constrained",
+        "nextAvailable": "2025-01-20T00:00:00Z",
+        "availableNow": false,
+        "constraintReason": "Maintenance until 2025-01-19"
+      },
+      "rating": {
+        "average": 4.2,
+        "count": 18
+      }
+    },
+    {
+      "id": "listing-004",
+      "title": "Basketball Set",
+      "type": "RESOURCE",
+      "bookingModel": "QUANTITY",
+      "location": {
+        "city": "Oslo",
+        "district": "Grunerløkka",
+        "address": "Storgata 1, 0182 Oslo"
+      },
+      "image": "/images/basketball-set.jpg",
+      "price": {
+        "from": 200,
+        "currency": "NOK",
+        "unit": "set"
+      },
+      "capacity": null,
+      "amenities": ["Equipment"],
+      "availability": {
+        "status": "available",
+        "nextAvailable": null,
+        "availableNow": true,
+        "stock": {
+          "total": 10,
+          "available": 7
+        }
+      },
+      "rating": {
+        "average": 4.0,
+        "count": 12
+      }
+    },
+    {
+      "id": "listing-005",
+      "title": "Workshop: Digital Skills",
+      "type": "EVENT",
+      "bookingModel": "CAPACITY",
+      "location": {
+        "city": "Oslo",
+        "district": "Sagene",
+        "address": "Trondheimsveien 10, 0560 Oslo"
+      },
+      "image": "/images/workshop.jpg",
+      "price": {
+        "from": 500,
+        "currency": "NOK",
+        "unit": "person"
+      },
+      "capacity": 30,
+      "amenities": ["Accessible", "WiFi", "Materials included"],
+      "availability": {
+        "status": "constrained",
+        "nextAvailable": "2025-02-15T14:00:00Z",
+        "availableNow": false,
+        "remainingCapacity": 12,
+        "constraintReason": "Limited spots remaining"
+      },
+      "rating": {
+        "average": 4.7,
+        "count": 67
+      }
+    },
+    {
+      "id": "listing-006",
+      "title": "Event Package: Summer Festival",
+      "type": "SERVICE",
+      "bookingModel": "PACKAGE",
+      "location": {
+        "city": "Oslo",
+        "district": "Frogner",
+        "address": "Frognerveien 1, 0266 Oslo"
+      },
+      "image": "/images/festival-package.jpg",
+      "price": {
+        "from": 5000,
+        "currency": "NOK",
+        "unit": "package"
+      },
+      "capacity": null,
+      "amenities": ["Venue", "Equipment", "Catering", "Entertainment"],
+      "availability": {
+        "status": "available",
+        "nextAvailable": "2025-07-15T00:00:00Z",
+        "availableNow": false
+      },
+      "rating": {
+        "average": 4.9,
+        "count": 34
+      }
+    }
+  ],
+  "filters": {
+    "listingTypes": ["SPACE", "RESOURCE", "EVENT", "SERVICE"],
+    "locations": ["Oslo", "Grunerløkka", "Sagene", "Sentrum", "Frogner"],
+    "amenities": ["Parking", "Accessible", "WiFi", "Changing rooms", "Equipment", "Catering"],
+    "priceRanges": {
+      "min": 0,
+      "max": 10000,
+      "steps": [0, 500, 1000, 2000, 5000, 10000]
+    }
+  }
+}

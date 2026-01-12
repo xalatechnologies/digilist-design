@@ -1,0 +1,1806 @@
+<hr>
+<h2 id="title%3A-%E2%80%9Cdigilist-platform---komplett-prosjektdokumentasjon%E2%80%9Dsubtitle%3A-%E2%80%9Cl%C3%B8sningsforslag-med-kravkorrelasjon%E2%80%9Ddate%3A-%E2%80%9Cjanuar-2026%E2%80%9Dauthor%3A-%E2%80%9Cxala-technologies-as%E2%80%9D" tabindex="-1">title: “Digilist Platform - Komplett Prosjektdokumentasjon”
+subtitle: “Løsningsforslag med Kravkorrelasjon”
+date: “Januar 2026”
+author: “Xala Technologies AS”</h2>
+<h1>Digilist Platform</h1>
+<h2 id="komplett-prosjektdokumentasjon-med-kravkorrelasjon" tabindex="-1">Komplett Prosjektdokumentasjon med Kravkorrelasjon</h2>
+<p><strong>Versjon:</strong> 2.0<br>
+<strong>Dato:</strong> 8. januar 2026<br>
+<strong>Status:</strong> Produksjonsklar<br>
+<strong>Dokument-type:</strong> Løsningsforslag (Tender Response)</p>
+<hr>
+<h1>Del 1: Innledning og Visjon</h1>
+<h2 id="1.1-sammendrag" tabindex="-1">1.1 Sammendrag</h2>
+<p>Digilist er en komplett SaaS-plattform for digitalisering av kommunale
+bookingsystemer i Norge. Plattformen erstatter fragmenterte, manuelle prosesser
+med én digital løsning som dekker hele verdikjeden - fra publisering av
+tilgjengelige anlegg, gjennom søknad, godkjenning og betaling, til rapportering
+og revisjon.</p>
+<h2 id="1.2-problemstilling" tabindex="-1">1.2 Problemstilling</h2>
+<p>Norske kommuner står overfor betydelige utfordringer:</p>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Konsekvens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fragmenterte systemer</td>
+<td>Ulike systemer for ulike anlegg</td>
+</tr>
+<tr>
+<td>Manuelle prosesser</td>
+<td>Papirbaserte søknader, telefon, e-post</td>
+</tr>
+<tr>
+<td>Urettferdig tilgang</td>
+<td>Manglende transparens i tildelingsbeslutninger</td>
+</tr>
+<tr>
+<td>Administrativ belastning</td>
+<td>Saksbehandlere overveldet av forespørsler</td>
+</tr>
+<tr>
+<td>Dårlig synlighet</td>
+<td>Innbyggere uvitende om tilgjengelige tider</td>
+</tr>
+<tr>
+<td>Etterlevelsesrisiko</td>
+<td>Vanskelig å spore GDPR-samtykker, revisjonslogger</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1.3-l%C3%B8sningen" tabindex="-1">1.3 Løsningen</h2>
+<p>Digilist tilbyr:</p>
+<ul>
+<li><strong>Én inngangsport</strong> for alle kommunale bookinger</li>
+<li><strong>Selvbetjening</strong> for innbyggere, lag og foreninger</li>
+<li><strong>Rettferdig tildeling</strong> basert på transparente regler</li>
+<li><strong>Automatisering</strong> som reduserer manuelt arbeid</li>
+<li><strong>Innebygd compliance</strong> for GDPR, Offentleglova, Arkivlova</li>
+</ul>
+<hr>
+<h1>Del 2: Kravspesifikasjon og Korrelasjon</h1>
+<h2 id="2.1-domenekrav-(dom-001-til-dom-017)" tabindex="-1">2.1 Domenekrav (DOM-001 til DOM-017)</h2>
+<h3 id="dom-001%3A-listing-som-eneste-bokbare-enhet" tabindex="-1">DOM-001: Listing som ENESTE Bokbare Enhet</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-001</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Alle bookinger MÅ referere til en Listing-entitet</li>
+<li>Bookinger som refererer til Facility-entiteter MÅ avvises med feilkode
+<code>BOOKING_INVALID_ENTITY</code></li>
+<li>API-endepunkter MÅ kun akseptere Listing-IDer for bookingoperasjoner</li>
+</ul>
+<p><strong>Arkitekturkrav:</strong></p>
+<ul>
+<li>Termen “Facility” MÅ IKKE forekomme i noe offentlig skjema, API-rute, eller
+frontend-komponent</li>
+<li>Kun Listing-entiteter KAN eksponeres i offentlige grensesnitt</li>
+<li>Skjemafiler MÅ eksklusivt bruke “listing” eller “listings” terminologi</li>
+</ul>
+<p><strong>Implementasjon:</strong></p>
+<pre class="code-block"><code class="language- ">apps/api/src/routes/listings/
+├── index.ts                    # Hovedruting
+├── listings-routes-thin.ts     # Tynnlag-ruter
+└── schemas.ts                  # Zod-valideringsskjemaer
+
+packages/shared/domain/src/listings/services/
+├── listing.business.service.ts  # Forretningslogikk
+├── listing.service.factory.ts   # Service-fabrikk
+└── zone.business.service.ts     # Sonelogikk (intern)
+
+packages/client/domain-hooks/src/listings/hooks/
+├── useListing.ts               # Enkelthenting
+├── useListings.ts              # Listehenting
+├── useListingDetail.ts         # Detaljvisning
+└── useListingManagement.ts     # CRUD-operasjoner
+</code></pre>
+<hr>
+<h3 id="dom-002%3A-6-anleggstyper-(listing-types)" tabindex="-1">DOM-002: 6 Anleggstyper (Listing Types)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-002</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>De 6 typenavnene:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Norsk</th>
+<th>Eksempler</th>
+<th>Primær Bookingmodell</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPACE</code></td>
+<td>Rom/Hall</td>
+<td>Idrettshall, møterom, kultursal</td>
+<td>TIME_RANGE, SLOTS</td>
+</tr>
+<tr>
+<td><code>RESOURCE</code></td>
+<td>Ressurs/Utstyr</td>
+<td>Projektor, sportsutstyr</td>
+<td>QUANTITY</td>
+</tr>
+<tr>
+<td><code>EVENT</code></td>
+<td>Arrangement</td>
+<td>Konserter, kurs, workshops</td>
+<td>CAPACITY</td>
+</tr>
+<tr>
+<td><code>SERVICE</code></td>
+<td>Tjeneste</td>
+<td>Vaktmester, renhold</td>
+<td>TIME_RANGE</td>
+</tr>
+<tr>
+<td><code>VEHICLE</code></td>
+<td>Kjøretøy</td>
+<td>Kommunebil, båt, sykkel</td>
+<td>ALL_DAY</td>
+</tr>
+<tr>
+<td><code>OTHER</code></td>
+<td>Annet</td>
+<td>Spesialtilpasset</td>
+<td>Alle modeller</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Listing-oppretting MÅ støtte nøyaktig 6 typer</li>
+<li>Ugyldige listing-typer MÅ avvises med feilkode <code>LISTING_INVALID_TYPE</code></li>
+<li>Listing-type MÅ være uforanderlig etter oppretting</li>
+<li>Listing-type MÅ være påkrevd og validert på skjemanivå</li>
+</ul>
+<p><strong>Testkrav:</strong></p>
+<ul>
+<li>Unit tests MÅ verifisere at alle 6 typer aksepteres</li>
+<li>Unit tests MÅ verifisere at ugyldige typer avvises</li>
+<li>Skjematester MÅ verifisere enum-constraint håndhevelse</li>
+</ul>
+<hr>
+<h3 id="dom-003%3A-6-bookingmodeller" tabindex="-1">DOM-003: 6 Bookingmodeller</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-003</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>De 6 modellene:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Modell</th>
+<th>Beskrivelse</th>
+<th>Brukstilfelle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TIME_RANGE</code></td>
+<td>Start og sluttid</td>
+<td>Standard timebookinger</td>
+</tr>
+<tr>
+<td><code>SLOTS</code></td>
+<td>Predefinerte tidsluker</td>
+<td>Faste treningstider, timer</td>
+</tr>
+<tr>
+<td><code>ALL_DAY</code></td>
+<td>Heldags booking</td>
+<td>Arrangementer, konferanser</td>
+</tr>
+<tr>
+<td><code>QUANTITY</code></td>
+<td>Antallsbasert</td>
+<td>Utstyrsleie</td>
+</tr>
+<tr>
+<td><code>CAPACITY</code></td>
+<td>Kapasitetsbasert</td>
+<td>Events med deltagerbegrensning</td>
+</tr>
+<tr>
+<td><code>PACKAGE</code></td>
+<td>Pakkeløsning</td>
+<td>Bundle-tilbud</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Booking-oppretting MÅ støtte nøyaktig 6 modeller</li>
+<li>Bookingmodell MÅ bestemmes av Listing-konfigurasjon</li>
+<li>Ugyldig bookingmodell for Listing-type MÅ avvises</li>
+<li>Bookingmodell MÅ være uforanderlig etter oppretting</li>
+</ul>
+<p><strong>Arkitekturkrav:</strong></p>
+<ul>
+<li>Bookingmodell MÅ defineres som enum i domain-data skjema</li>
+<li>Bookingmodell-logikk MÅ ligge i domenelag, ikke API-lag</li>
+<li>Modellvalidering MÅ skje før database-skriving</li>
+</ul>
+<p><strong>Testdekning:</strong></p>
+<ul>
+<li>Testdekning MÅ være minst 95% for DOM-003</li>
+</ul>
+<hr>
+<h3 id="dom-004%3A-unified-booking-engine" tabindex="-1">DOM-004: Unified Booking Engine</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-004</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Alle bookingmodeller MÅ bruke én enkelt bookings-tabell</li>
+<li>Bookings-tabellen MÅ lagre modell-agnostiske fellesfelter</li>
+<li>Modellspesifikke data MÅ lagres i <code>booking_items</code> eller <code>allocations</code> tabeller</li>
+<li>Bookingspørringer MÅ fungere på tvers av alle modeller uten modellspesifikk
+logikk</li>
+</ul>
+<p><strong>Arkitekturkrav:</strong></p>
+<ul>
+<li>Skjema MÅ definere enkelt bookings-tabell med tenant_id FK</li>
+<li>Ingen modellspesifikke bookingtabeller MÅ eksistere</li>
+<li>Domenetjenester MÅ håndtere alle modeller gjennom unified interface</li>
+</ul>
+<p><strong>Databaseskjema:</strong></p>
+<pre class="code-block"><code class="language-sql sql">CREATE TABLE domain.bookings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id UUID NOT NULL,
+  org_id UUID NOT NULL,
+  listing_id UUID NOT NULL,
+  user_id UUID NOT NULL,
+  booking_model booking_model NOT NULL,
+  status booking_status DEFAULT 'draft' NOT NULL,
+  starts_at TIMESTAMPTZ NOT NULL,
+  ends_at TIMESTAMPTZ NOT NULL,
+  quantity INTEGER,
+  total_price_cents INTEGER NOT NULL,
+  currency TEXT DEFAULT 'NOK' NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+</code></pre>
+<hr>
+<h3 id="dom-005%3A-booking-items-(linjeartikler)" tabindex="-1">DOM-005: Booking Items (Linjeartikler)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-005</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Hver booking MÅ ha én eller flere booking_items</li>
+<li>Booking items MÅ inneholde listing snapshot på bookingtidspunkt</li>
+<li>Booking items MÅ være uforanderlige etter oppretting</li>
+<li>Booking items MÅ støtte antall og prisinformasjon</li>
+</ul>
+<p><strong>Arkitekturkrav:</strong></p>
+<ul>
+<li>Skjema MÅ definere <code>booking_items</code> tabell med <code>booking_id</code> FK</li>
+<li>Listing snapshot MÅ lagres som JSONB eller separate kolonner</li>
+<li>Ingen direkte referanse til listings-tabell fra booking_items</li>
+</ul>
+<hr>
+<h3 id="dom-006%3A-allocations-(kalender)" tabindex="-1">DOM-006: Allocations (Kalender)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-006</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Tidsblokk-allokeringer MÅ opprettes for hver booking</li>
+<li>Allokeringer MÅ støtte start_time og end_time</li>
+<li>Konfliktdeteksjon MÅ sjekke allokeringer for overlappende tidsblokker</li>
+<li>Allokeringer MÅ være søkbare etter datoområde</li>
+</ul>
+<p><strong>Arkitekturkrav:</strong></p>
+<ul>
+<li>Skjema MÅ definere allocations-tabell med tidsrange-kolonner</li>
+<li>Databaseindekser MÅ støtte effektive konfliktspørringer</li>
+<li>Konfliktdeteksjon MÅ skje i domenetjeneste, ikke databasetrigger</li>
+</ul>
+<p><strong>Implementasjon:</strong></p>
+<pre class="code-block"><code class="language-sql sql">CREATE TABLE domain.allocations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id UUID NOT NULL,
+  booking_id UUID NOT NULL,
+  bookable_unit_id UUID NOT NULL,
+  time_range TSTZRANGE NOT NULL,
+  status allocation_status DEFAULT 'confirmed',
+  EXCLUDE USING GIST (bookable_unit_id WITH =, time_range WITH &amp;&amp;)
+);
+</code></pre>
+<hr>
+<h3 id="dom-007%3A-tilgjengelighetsregler-(availability-rules)" tabindex="-1">DOM-007: Tilgjengelighetsregler (Availability Rules)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-007</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Hvert listing MÅ støtte per-listing tilgjengelighetsregler</li>
+<li>Tilgjengelighetsregler MÅ støtte ukedag og tid-på-dagen begrensninger</li>
+<li>Tilgjengelighetsregler MÅ evalueres før booking-oppretting</li>
+<li>Bookinger utenfor tilgjengelighetsvinduer MÅ avvises</li>
+</ul>
+<hr>
+<h3 id="dom-008%3A-prisregler---periodebasert" tabindex="-1">DOM-008: Prisregler - Periodebasert</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-008</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Prisregler MÅ støtte basis, peak, og helgeprising per listing</li>
+<li>Prisregler MÅ evalueres ved bookingtidspunkt</li>
+<li>Prisregler MÅ støtte datoområde-definisjoner</li>
+</ul>
+<hr>
+<h3 id="dom-009%3A-prisregler---brukergruppebasert" tabindex="-1">DOM-009: Prisregler - Brukergruppebasert</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-009</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Prisregler MÅ støtte brukergruppe-definisjoner: barn, frivillige,
+organisasjoner</li>
+<li>Brukergruppe-prising MÅ overstyre periodebasert prising når aktuelt</li>
+<li>Brukergruppe-deteksjon MÅ skje ved bookingtidspunkt</li>
+<li>Prisregler MÅ støtte gratis prising for spesifikke grupper</li>
+</ul>
+<p><strong>De 6 brukergruppene (Actor Types):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Brukergruppe</th>
+<th>Kode</th>
+<th>Rabatt</th>
+<th>Verifisering</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Privatperson</td>
+<td><code>privatperson</code></td>
+<td>0%</td>
+<td>Nei</td>
+</tr>
+<tr>
+<td>Næringsliv</td>
+<td><code>naringsliv</code></td>
+<td>0%</td>
+<td>BRREG (valgfritt)</td>
+</tr>
+<tr>
+<td>Forening</td>
+<td><code>forening</code></td>
+<td>Varierer</td>
+<td>Ja</td>
+</tr>
+<tr>
+<td>Idrettslag</td>
+<td><code>idrettslag</code></td>
+<td>30-70%</td>
+<td>NIF</td>
+</tr>
+<tr>
+<td>Skole</td>
+<td><code>skole</code></td>
+<td>100%</td>
+<td>Ja</td>
+</tr>
+<tr>
+<td>Kommune</td>
+<td><code>kommune</code></td>
+<td>100%</td>
+<td>Ja</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="dom-010%3A-gjentakende-bookinger" tabindex="-1">DOM-010: Gjentakende Bookinger</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-010</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Booking-oppretting MÅ støtte gjentakelsesmønstre: daglig, ukentlig, månedlig,
+årlig</li>
+<li>Gjentakende bookinger MÅ generere individuelle booking-instanser</li>
+<li>Gjentakende booking-kansellering MÅ kansellere alle fremtidige instanser</li>
+<li>Gjentakende booking-endring MÅ oppdatere alle fremtidige instanser</li>
+</ul>
+<hr>
+<h3 id="dom-011%3A-sesongutleie-(seasonal-leasing)" tabindex="-1">DOM-011: Sesongutleie (Seasonal Leasing)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-011</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Sesongutleie MÅ støtte langsiktige allokeringsregler</li>
+<li>Sesongutleier MÅ overstyre vanlig booking-tilgjengelighet</li>
+<li>Sesongutleie-allokering MÅ være synlig i kalender</li>
+<li>Sesongutleie-konflikter med vanlige bookinger MÅ forhindres</li>
+</ul>
+<p><strong>Statusflyt:</strong></p>
+<pre class="code-block"><code class="language- ">søknad_sendt → søknad_godkjent → tildelt → bekreftet
+</code></pre>
+<hr>
+<h3 id="dom-012%3A-kanselleringsregler" tabindex="-1">DOM-012: Kanselleringsregler</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-012</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Hvert listing MÅ støtte kanselleringsfrist-regler</li>
+<li>Kanselleringsforespørsler etter frist MÅ avvises eller kreve admin-godkjenning</li>
+<li>Kanselleringsregler MÅ støtte refusjonsprosent basert på timing</li>
+<li>Kansellering MÅ trigge varslinger til relevante parter</li>
+</ul>
+<hr>
+<h3 id="dom-013%3A-tilleggstjenester-(additional-services)" tabindex="-1">DOM-013: Tilleggstjenester (Additional Services)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-013</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P1</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Bookinger MÅ støtte tilleggstjenester: utstyr, catering, etc.</li>
+<li>Tilleggstjenester MÅ være valgbare under booking-oppretting</li>
+<li>Tilleggstjenester MÅ ha uavhengig prising</li>
+<li>Tilleggstjenester MÅ inkluderes i booking-total</li>
+</ul>
+<p><strong>Seed-data (27 tjenester):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Kategori</th>
+<th>Tjenester</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Personell</td>
+<td>Vaktmester, Dommer, Ordensvakt, Lydtekniker, DJ, Fotograf</td>
+</tr>
+<tr>
+<td>Renhold</td>
+<td>Renhold, Klargjøring, Omfattende renhold</td>
+</tr>
+<tr>
+<td>Utstyr</td>
+<td>Stoler, Scene, Lydanlegg, Prosjektor, Bord</td>
+</tr>
+<tr>
+<td>Servering</td>
+<td>Kaffe/te, Enkel servering, Lunsjservering, Full catering</td>
+</tr>
+<tr>
+<td>Sport</td>
+<td>Tidtaking, Speaker, Resultatservice</td>
+</tr>
+<tr>
+<td>Teknisk</td>
+<td>Streaming, Kameramann, Videokonferanse</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="dom-014%3A-vilk%C3%A5r-og-betingelser" tabindex="-1">DOM-014: Vilkår og Betingelser</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>DOM-014</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Booking-oppretting MÅ kreve aksept av vilkår og betingelser</li>
+<li>Vilkår-aksept MÅ registreres med tidsstempel og bruker-ID</li>
+<li>Vilkår-aksept MÅ kreves for hver booking, ikke per bruker</li>
+<li>Booking uten vilkår-aksept MÅ avvises</li>
+</ul>
+<hr>
+<h3 id="dom-015-til-dom-017%3A-%C3%B8vrige-domenekrav" tabindex="-1">DOM-015 til DOM-017: Øvrige domenekrav</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Tittel</th>
+<th>Prioritet</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DOM-015</td>
+<td>Offentlig aktivitetskalender</td>
+<td>P1</td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td>DOM-016</td>
+<td>Hierarkiske kategorier</td>
+<td>P1</td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td>DOM-017</td>
+<td>Listing mediehåndtering</td>
+<td>P1</td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2.2-plattformkrav-(saas-001-til-saas-010)" tabindex="-1">2.2 Plattformkrav (SAAS-001 til SAAS-010)</h2>
+<h3 id="saas-001%3A-multi-tenant-arkitektur" tabindex="-1">SAAS-001: Multi-Tenant Arkitektur</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>SAAS-001</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+<tr>
+<td><strong>Kilde</strong></td>
+<td>PRD v2.0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Alle tenant-scoped tabeller MÅ ha <code>tenant_id</code> kolonne</li>
+<li>Alle spørringer MÅ filtrere basert på tenant-kontekst</li>
+<li>API guards MÅ validere tenant-tilgang</li>
+<li>Kryssing av tenant-data krever saas scope</li>
+</ul>
+<p><strong>Implementasjon:</strong></p>
+<pre class="code-block"><code class="language-sql sql">-- Tenant-tabell
+CREATE TABLE platform.tenants (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  status tenant_status DEFAULT 'active',
+  settings JSONB DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Row-Level Security
+ALTER TABLE domain.listings ENABLE ROW LEVEL SECURITY;
+CREATE POLICY tenant_isolation ON domain.listings
+  USING (tenant_id = current_setting('app.tenant_id')::uuid);
+</code></pre>
+<hr>
+<h3 id="saas-002%3A-rollebasert-tilgangskontroll-(rbac)" tabindex="-1">SAAS-002: Rollebasert Tilgangskontroll (RBAC)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>SAAS-002</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fire nivåer av tilgangskontroll:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Nivå</th>
+<th>Beskrivelse</th>
+<th>Eksempel-rettigheter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user</code></td>
+<td>Personlig</td>
+<td>Egen portal</td>
+<td>Se egne bookinger, opprette booking</td>
+</tr>
+<tr>
+<td><code>org</code></td>
+<td>Organisasjon</td>
+<td>Avdeling/enhet</td>
+<td>Administrere anlegg, godkjenne</td>
+</tr>
+<tr>
+<td><code>tenant</code></td>
+<td>Kommune</td>
+<td>Hele tenant</td>
+<td>Administrere organisasjoner</td>
+</tr>
+<tr>
+<td><code>saas</code></td>
+<td>Platform</td>
+<td>Alle tenants</td>
+<td>Systemkonfigurasjon</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="saas-003%3A-id-porten-integrasjon" tabindex="-1">SAAS-003: ID-porten Integrasjon</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>SAAS-003</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>🔄 I utvikling</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>System MÅ støtte autentisering via ID-porten (BankID/MinID)</li>
+<li>OpenID Connect med PKCE flow</li>
+<li>Sikkerhetsnivå 3/4</li>
+</ul>
+<hr>
+<h2 id="2.3-sikkerhetskrav-(sec-001-til-sec-004)" tabindex="-1">2.3 Sikkerhetskrav (SEC-001 til SEC-004)</h2>
+<h3 id="sec-001%3A-datakryptering" tabindex="-1">SEC-001: Datakryptering</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>SEC-001</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Krav:</strong></p>
+<ul>
+<li>TLS 1.3 for all trafikk</li>
+<li>AES-256 for persondata i hvile</li>
+<li>httpOnly, Secure, SameSite cookies</li>
+</ul>
+<hr>
+<h3 id="sec-002%3A-inputvalidering" tabindex="-1">SEC-002: Inputvalidering</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>SEC-002</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Krav:</strong></p>
+<ul>
+<li>Alle inputs MÅ valideres med Zod-skjemaer</li>
+<li>SQL injection forebygges via ORM (Drizzle)</li>
+<li>XSS forebygges via CSP headers</li>
+<li>CSRF-beskyttelse på alle muterende operasjoner</li>
+</ul>
+<hr>
+<h3 id="sec-003%3A-revisjonslogging" tabindex="-1">SEC-003: Revisjonslogging</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>SEC-003</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Krav:</strong></p>
+<ul>
+<li>Alle tilstandsendringer MÅ logges med brukerkontekst</li>
+<li>Revisjonslogg MÅ være uforanderlig (append-only)</li>
+<li>Oppbevaringstid: 10 år</li>
+</ul>
+<hr>
+<h3 id="sec-004%3A-gdpr-etterlevelse" tabindex="-1">SEC-004: GDPR Etterlevelse</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>SEC-004</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Artikkel-mapping:</strong></p>
+<table>
+<thead>
+<tr>
+<th>GDPR Artikkel</th>
+<th>Krav</th>
+<th>Implementasjon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Art. 6</td>
+<td>Lovlig behandling</td>
+<td>Eksplisitt samtykke per booking</td>
+</tr>
+<tr>
+<td>Art. 12-14</td>
+<td>Informasjonsplikt</td>
+<td>Personvernerklæring</td>
+</tr>
+<tr>
+<td>Art. 15</td>
+<td>Rett til innsyn</td>
+<td>JSON eksport</td>
+</tr>
+<tr>
+<td>Art. 16</td>
+<td>Rett til retting</td>
+<td>Profilredigering</td>
+</tr>
+<tr>
+<td>Art. 17</td>
+<td>Rett til sletting</td>
+<td>Anonymisering</td>
+</tr>
+<tr>
+<td>Art. 20</td>
+<td>Dataportabilitet</td>
+<td>JSON eksport innen 30 dager</td>
+</tr>
+<tr>
+<td>Art. 30</td>
+<td>Behandlingsprotokoll</td>
+<td>Automatisk logging</td>
+</tr>
+<tr>
+<td>Art. 32</td>
+<td>Sikkerhet</td>
+<td>Kryptering, tilgangskontroll</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2.3-anbudskrav-(tnd-001-til-tnd-009)" tabindex="-1">2.3 Anbudskrav (TND-001 til TND-009)</h2>
+<h3 id="tnd-001%3A-offentlig-kalender" tabindex="-1">TND-001: Offentlig Kalender</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>TND-001</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funksjonelle krav:</strong></p>
+<ul>
+<li>Sanntids tilgjengelighetsvisning med flere visninger</li>
+<li>Måneds-, uke-, og dagvisning</li>
+<li>Offentlig kalender viser belegg uten persondata</li>
+<li>Fargekodede statusindikatorer</li>
+</ul>
+<hr>
+<h3 id="tnd-008%3A-bookingstatus-sporing" tabindex="-1">TND-008: Bookingstatus-sporing</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Verdi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ID</strong></td>
+<td>TND-008</td>
+</tr>
+<tr>
+<td><strong>Prioritet</strong></td>
+<td>P0 (Kritisk)</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>✅ Dekket</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fullstendig tilstandsmaskin:</strong></p>
+<pre class="code-block"><code class="language- ">draft → pending → awaiting_payment → awaiting_approval → confirmed → completed
+              ↓           ↓                ↓               ↓
+           expired    expired          rejected        cancelled
+                                                            ↓
+                                                        refunded
+</code></pre>
+<hr>
+<h1>Del 3: Teknisk Arkitektur</h1>
+<h2 id="3.1-systemarkitektur" tabindex="-1">3.1 Systemarkitektur</h2>
+<pre class="code-block"><code class="language- ">┌─────────────────────────────────────────────────────────────────────┐
+│                        DIGILIST PLATFORM                            │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   FRONTEND LAYER (React Router 7 / React 19)                       │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌───────────┐ │
+│  │   Web App   │  │  Backoffice │  │ Learning Hub│  │   Docs    │ │
+│  │    :8000    │  │    :8001    │  │    :8003    │  │   :8002   │ │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘  └─────┬─────┘ │
+│         │                │                │                │       │
+│         └────────────────┴────────────────┴────────────────┘       │
+│                                   │                                 │
+│   API LAYER (Fastify 5 - Thin Transport)                          │
+│                          ┌───────▼───────┐                         │
+│                          │   API Server  │                         │
+│                          │    :4000      │                         │
+│                          └───────┬───────┘                         │
+│                                  │                                  │
+│   DATA LAYER                     │                                  │
+│         ┌────────────────────────┼────────────────────────┐        │
+│         │                        │                        │        │
+│  ┌──────▼──────┐          ┌──────▼──────┐          ┌──────▼──────┐│
+│  │ PostgreSQL  │          │    Redis    │          │   Worker    ││
+│  │     16      │          │    7.x      │          │  (BullMQ)   ││
+│  └─────────────┘          └─────────────┘          └─────────────┘│
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+                                   │
+         ┌──────────────────────────┼──────────────────────────┐
+         │                          │                          │
+ ┌───────▼───────┐          ┌───────▼───────┐          ┌───────▼───────┐
+ │   ID-porten   │          │     Vipps     │          │     BRREG     │
+ │   (Auth)      │          │   (Payment)   │          │ (Verification)│
+ └───────────────┘          └───────────────┘          └───────────────┘
+</code></pre>
+<h2 id="3.2-teknologivalg" tabindex="-1">3.2 Teknologivalg</h2>
+<table>
+<thead>
+<tr>
+<th>Komponent</th>
+<th>Teknologi</th>
+<th>Versjon</th>
+<th>Begrunnelse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend</td>
+<td>React + React Router</td>
+<td>19 / 7</td>
+<td>SSR, streaming, moderne</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Fastify</td>
+<td>5.x</td>
+<td>Høy ytelse, TypeScript</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>PostgreSQL</td>
+<td>16.x</td>
+<td>ACID, JSON, Range-typer</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>Drizzle</td>
+<td>0.30+</td>
+<td>Type-sikker, performant</td>
+</tr>
+<tr>
+<td>Cache/Queue</td>
+<td>Redis</td>
+<td>7.x</td>
+<td>Sessions, BullMQ</td>
+</tr>
+<tr>
+<td>Språk</td>
+<td>TypeScript</td>
+<td>5.x</td>
+<td>Strict mode</td>
+</tr>
+<tr>
+<td>Monorepo</td>
+<td>pnpm + Turbo</td>
+<td>-</td>
+<td>Effektiv, caching</td>
+</tr>
+<tr>
+<td>UI</td>
+<td>@shared/ui</td>
+<td>-</td>
+<td>OKLCH tokens, WCAG AA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3.3-databaseskjema" tabindex="-1">3.3 Databaseskjema</h2>
+<p><strong>Fire logiske skjemaer:</strong></p>
+<pre class="code-block"><code class="language-sql sql">-- Plattformtjenester
+CREATE SCHEMA platform;  -- tenants, users, orgs, auth
+
+-- Domenelogikk
+CREATE SCHEMA domain;    -- listings, bookings, payments
+
+-- Overvåkning
+CREATE SCHEMA monitoring; -- scans, reports, alerts
+
+-- Delte ressurser
+CREATE SCHEMA cross_cutting; -- files, assets
+</code></pre>
+<h2 id="3.4-monorepo-struktur" tabindex="-1">3.4 Monorepo-struktur</h2>
+<pre class="code-block"><code class="language- ">digilist-platform/
+├── apps/                          # 8 applikasjoner
+│   ├── api/                       # Fastify REST API
+│   ├── web/                       # Publikumsportal
+│   ├── backoffice/               # Saksbehandler-UI
+│   ├── monitoring/               # QA Dashboard
+│   ├── docs/                     # Dokumentasjon
+│   ├── learning-hub/             # E-læring
+│   ├── saas/                     # Tenant Admin
+│   └── worker/                   # BullMQ jobs
+│
+├── packages/                      # Delte pakker
+│   ├── server/
+│   │   ├── data/                 # Drizzle ORM (domain)
+│   │   ├── platform-data/        # Platform-skjema
+│   │   └── monitoring-data/      # Overvåkning-skjema
+│   │
+│   ├── shared/
+│   │   ├── ui/                   # @shared/ui komponentbibliotek
+│   │   ├── i18n/                 # Internasjonalisering
+│   │   ├── validation/           # Zod-skjemaer
+│   │   └── contracts/            # DTOs og kontrakter
+│   │
+│   └── client/
+│       ├── api-client/           # API-klient
+│       └── domain-hooks/         # React Query hooks
+│
+├── infra/                         # Infrastruktur
+│   └── deploy/
+│       ├── scripts/deploy.sh     # Deployment-skript
+│       └── environments/         # Miljøkonfig
+│
+└── docs/                          # Dokumentasjon
+    ├── 01-product/               # PRD, SRSD
+    ├── 02-architecture/          # Arkitektur
+    └── requirements/             # Kravsporing
+</code></pre>
+<hr>
+<h1>Del 4: Testing og Kvalitetssikring</h1>
+<h2 id="4.1-teststrategi" tabindex="-1">4.1 Teststrategi</h2>
+<pre class="code-block"><code class="language- ">          ▲ E2E (Journey Tests)
+         ╱ ╲  Playwright - 10%
+        ╱   ╲
+       ╱     ╲
+      ▲───────▲ Integration (Scenario)
+     ╱         ╲  76 assertions - 20%
+    ╱           ╲
+   ╱             ╲
+  ▲───────────────▲ Unit Tests
+ ╱                 ╲  Vitest - 70%
+╱___________________╲
+</code></pre>
+<h2 id="4.2-testtyper-og-dekning" tabindex="-1">4.2 Testtyper og Dekning</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Verktøy</th>
+<th>Dekningsgrad</th>
+<th>Formål</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td>Vitest</td>
+<td>&gt;95%</td>
+<td>Domenelogikk</td>
+</tr>
+<tr>
+<td>Integration</td>
+<td>Vitest + Supertest</td>
+<td>&gt;90%</td>
+<td>API-endepunkter</td>
+</tr>
+<tr>
+<td>Scenario</td>
+<td>Scenario Hub</td>
+<td>76 assertions</td>
+<td>Brukerhistorier</td>
+</tr>
+<tr>
+<td>E2E/Journey</td>
+<td>Playwright</td>
+<td>Kritiske flyter</td>
+<td>Brukerreiser</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>axe-core</td>
+<td>WCAG 2.1 AA</td>
+<td>Tilgjengelighet</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Semgrep, Gitleaks</td>
+<td>100% kode</td>
+<td>Sårbarheter</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Lighthouse</td>
+<td>Core Web Vitals</td>
+<td>Ytelse</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4.3-kravsporing" tabindex="-1">4.3 Kravsporing</h2>
+<p>Alle krav har full sporbarhet gjennom <code>requirements.json</code>:</p>
+<pre class="code-block"><code class="language-json json">{
+  &quot;id&quot;: &quot;DOM-001&quot;,
+  &quot;title&quot;: &quot;Listing as ONLY Bookable Entity&quot;,
+  &quot;priority&quot;: &quot;P0&quot;,
+  &quot;status&quot;: &quot;covered&quot;,
+  &quot;traceability&quot;: {
+    &quot;schema&quot;: [&quot;listings.ts&quot;],
+    &quot;api&quot;: [&quot;listings-routes.ts&quot;],
+    &quot;services&quot;: [&quot;listing.service.ts&quot;],
+    &quot;hooks&quot;: [&quot;useListing.ts&quot;],
+    &quot;frontend&quot;: [&quot;ListingCard.tsx&quot;],
+    &quot;tests&quot;: [&quot;listing.test.ts&quot;]
+  },
+  &quot;acceptanceCriteria&quot;: {
+    &quot;functional&quot;: [...],
+    &quot;architecture&quot;: [...],
+    &quot;testing&quot;: [...],
+    &quot;monitoring&quot;: [...]
+  }
+}
+</code></pre>
+<h2 id="4.4-monitoring-dashboard" tabindex="-1">4.4 Monitoring Dashboard</h2>
+<p>Sanntids overvåkning via <code>apps/monitoring</code>:</p>
+<ul>
+<li>Kravstatuser per modul</li>
+<li>Testkjøringshistorikk</li>
+<li>Journey-rapporter med skjermbilder</li>
+<li>Dekningsmålinger</li>
+<li>Sikkerhetsalarmer</li>
+</ul>
+<hr>
+<h1>Del 5: Infrastruktur og Drift</h1>
+<h2 id="5.1-produksjonsmilj%C3%B8" tabindex="-1">5.1 Produksjonsmiljø</h2>
+<table>
+<thead>
+<tr>
+<th>Komponent</th>
+<th>Spesifikasjon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leverandør</td>
+<td>Hostinger VPS</td>
+</tr>
+<tr>
+<td>Lokasjon</td>
+<td>Nederland (EU)</td>
+</tr>
+<tr>
+<td>IP</td>
+<td>72.61.23.56</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Ubuntu 22.04</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>20.x LTS</td>
+</tr>
+<tr>
+<td>PM2</td>
+<td>v6.x</td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>Reverse Proxy + SSL</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>16.x (lokal)</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>7.x</td>
+</tr>
+<tr>
+<td>SSL</td>
+<td>Let’s Encrypt (Certbot)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5.2-domener" tabindex="-1">5.2 Domener</h2>
+<table>
+<thead>
+<tr>
+<th>Subdomen</th>
+<th>Port</th>
+<th>Formål</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://digilist.no">digilist.no</a></td>
+<td>8000</td>
+<td>Publikumsportal</td>
+</tr>
+<tr>
+<td><a href="http://api.digilist.no">api.digilist.no</a></td>
+<td>4000</td>
+<td>REST API</td>
+</tr>
+<tr>
+<td><a href="http://admin.digilist.no">admin.digilist.no</a></td>
+<td>8001</td>
+<td>Backoffice</td>
+</tr>
+<tr>
+<td><a href="http://docs.digilist.no">docs.digilist.no</a></td>
+<td>8002</td>
+<td>Dokumentasjon</td>
+</tr>
+<tr>
+<td><a href="http://learn.digilist.no">learn.digilist.no</a></td>
+<td>8003</td>
+<td>Opplæring</td>
+</tr>
+<tr>
+<td><a href="http://monitor.digilist.no">monitor.digilist.no</a></td>
+<td>8004</td>
+<td>QA Dashboard</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5.3-deployment-protocol" tabindex="-1">5.3 Deployment Protocol</h2>
+<p>Fire-fase deployment:</p>
+<pre class="code-block"><code class="language-bash bash">./infra/deploy/scripts/deploy.sh production api
+
+# Fase 1: BUILD
+# Lokal bundling med tsup
+
+# Fase 2: PACKAGE
+# Opprett deployment-pakke
+
+# Fase 3: SYNC
+# rsync til VPS
+
+# Fase 4: ACTIVATE
+# PM2 restart + helsesjekk
+</code></pre>
+<hr>
+<h1>Del 6: Ytelsesmål</h1>
+<h2 id="6.1-tekniske-kpier" tabindex="-1">6.1 Tekniske KPIer</h2>
+<table>
+<thead>
+<tr>
+<th>Metrikk</th>
+<th>Mål</th>
+<th>Måling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LCP (Largest Contentful Paint)</td>
+<td>&lt; 2.5s</td>
+<td>Core Web Vitals</td>
+</tr>
+<tr>
+<td>Time to Interactive</td>
+<td>&lt; 3.5s</td>
+<td>Lighthouse</td>
+</tr>
+<tr>
+<td>API Response (p50)</td>
+<td>&lt; 200ms</td>
+<td>Appmonitor</td>
+</tr>
+<tr>
+<td>API Response (p95)</td>
+<td>&lt; 500ms</td>
+<td>Appmonitor</td>
+</tr>
+<tr>
+<td>Database Query (p95)</td>
+<td>&lt; 100ms</td>
+<td>DB-monitor</td>
+</tr>
+<tr>
+<td>Samtidige brukere</td>
+<td>1000+</td>
+<td>Lasttesting</td>
+</tr>
+<tr>
+<td>Tilgjengelighet</td>
+<td>99.9%</td>
+<td>Oppetidsmonitor</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6.2-forretningsm%C3%A5l" tabindex="-1">6.2 Forretningsmål</h2>
+<table>
+<thead>
+<tr>
+<th>Metrikk</th>
+<th>År 1</th>
+<th>År 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registrerte brukere</td>
+<td>10 000+</td>
+<td>25 000+</td>
+</tr>
+<tr>
+<td>Månedlig aktive</td>
+<td>5 000+</td>
+<td>15 000+</td>
+</tr>
+<tr>
+<td>Online booking-rate</td>
+<td>&gt; 80%</td>
+<td>&gt; 90%</td>
+</tr>
+<tr>
+<td>Auto-godkjenningsrate</td>
+<td>&gt; 60%</td>
+<td>&gt; 70%</td>
+</tr>
+<tr>
+<td>Anleggsutnyttelse</td>
+<td>&gt; 70%</td>
+<td>&gt; 80%</td>
+</tr>
+<tr>
+<td>NPS</td>
+<td>&gt; 50</td>
+<td>&gt; 60</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1>Del 7: Prosjektplan</h1>
+<h2 id="7.1-fase-1%3A-mvp-(q1-2025)-%E2%9C%85-levert" tabindex="-1">7.1 Fase 1: MVP (Q1 2025) ✅ LEVERT</h2>
+<ul>
+<li>✅ Bookingmotor (alle 6 modeller)</li>
+<li>✅ Anleggshåndtering (alle 6 typer)</li>
+<li>✅ Brukerautentisering</li>
+<li>✅ Grunnleggende godkjenningsflyt</li>
+<li>✅ E-postvarsling</li>
+<li>✅ Multi-tenant arkitektur</li>
+<li>✅ RBAC og tilgangskontroll</li>
+</ul>
+<h2 id="7.2-fase-2%3A-betaling-(q2-2025)" tabindex="-1">7.2 Fase 2: Betaling (Q2 2025)</h2>
+<ul>
+<li>Vipps-integrasjon</li>
+<li>Fakturagenerering</li>
+<li>Gjentakende bookinger</li>
+<li>Mobiloptimalisert webapp</li>
+</ul>
+<h2 id="7.3-fase-3%3A-avansert-(q3-2025)" tabindex="-1">7.3 Fase 3: Avansert (Q3 2025)</h2>
+<ul>
+<li>RCO-integrasjon (låskoder)</li>
+<li>Sesongutleie-tildeling</li>
+<li>Kalenderintegrasjoner</li>
+<li>BRREG/NIF-verifisering</li>
+</ul>
+<h2 id="7.4-fase-4%3A-enterprise-(q4-2025)" tabindex="-1">7.4 Fase 4: Enterprise (Q4 2025)</h2>
+<ul>
+<li>Tverrkommunal booking</li>
+<li>Offentlig API</li>
+<li>White-label støtte</li>
+</ul>
+<hr>
+<h1>Vedlegg A: Ordliste</h1>
+<table>
+<thead>
+<tr>
+<th>Begrep</th>
+<th>Definisjon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tenant</td>
+<td>Kommune eller organisasjon som bruker Digilist</td>
+</tr>
+<tr>
+<td>Listing</td>
+<td>Bokbart anlegg (idrettshall, møterom, etc.)</td>
+</tr>
+<tr>
+<td>Bookable Unit</td>
+<td>Underenhet som kan bookes separat</td>
+</tr>
+<tr>
+<td>Actor Type</td>
+<td>Prisgruppe (privatperson, idrettslag, etc.)</td>
+</tr>
+<tr>
+<td>Allocation</td>
+<td>Tidsblokk-reservasjon i kalender</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>Role-Based Access Control</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1>Vedlegg B: Kravstatus-Sammendrag</h1>
+<table>
+<thead>
+<tr>
+<th>Modul</th>
+<th>Antall</th>
+<th>P0</th>
+<th>P1</th>
+<th>Dekket</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain (DOM)</td>
+<td>17</td>
+<td>6</td>
+<td>11</td>
+<td>17/17 ✅</td>
+</tr>
+<tr>
+<td>Platform (SAAS)</td>
+<td>10</td>
+<td>4</td>
+<td>6</td>
+<td>8/10</td>
+</tr>
+<tr>
+<td>Tender (TND)</td>
+<td>9</td>
+<td>3</td>
+<td>6</td>
+<td>9/9 ✅</td>
+</tr>
+<tr>
+<td>Security (SEC)</td>
+<td>4</td>
+<td>4</td>
+<td>0</td>
+<td>4/4 ✅</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>40</strong></td>
+<td><strong>17</strong></td>
+<td><strong>23</strong></td>
+<td><strong>38/40</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Dokumentet generert: 8. januar 2026</em><br>
+<em>Xala Technologies AS</em></p>
+

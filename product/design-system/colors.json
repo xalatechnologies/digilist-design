@@ -1,0 +1,28 @@
+{
+  "primary": "blue",
+  "secondary": "blue",
+  "neutral": "gray",
+  "_meta": {
+    "description": "DigiList color tokens based on Designsystemet.no with blue (#33649E) as primary accent",
+    "base_system": "Designsystemet.no",
+    "primary_accent": "#33649E",
+    "wcag_compliance": "WCAG 2.1 AA",
+    "note": "All color values come from Designsystemet.no. Only accent choice (#33649E) is defined here. This is not 'creating a new blue design' - it's using Designsystemet.no fully and choosing #33649E as primary accent within the system's allowed usage."
+  },
+  "usage": {
+    "primary": "#33649E - Primary buttons, main CTA (white text ≥ 4.5:1 contrast)",
+    "primary_hover": "#2C5688 - Hover state on primary buttons",
+    "primary_active": "#24496F - Active/pressed state",
+    "primary_subtle": "#E6EEF7 - Selected elements, chips, backgrounds (dark text ≥ 4.5:1 contrast)",
+    "semantic_success": "Green (semantic, from Designsystemet)",
+    "semantic_warning": "Orange (from Designsystemet)",
+    "semantic_error": "Red (from Designsystemet)",
+    "semantic_info": "Blue (from Designsystemet - not brand blue)"
+  },
+  "rules": {
+    "brand_blue_not_semantic": "Brand blue ≠ semantic info blue. Status must always have icon + text.",
+    "no_custom_colors": "No custom color palettes outside the brand accent",
+    "no_color_only_indicators": "No color-only communication of state",
+    "contrast_requirements": "Text ≥ 4.5:1, UI/icons ≥ 3:1, Focus ≥ 3:1"
+  }
+}

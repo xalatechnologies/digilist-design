@@ -157,6 +157,7 @@ export function ShellDesignPage() {
             src="/shell/design/fullscreen"
             className="w-full h-full border-0"
             title="Shell Preview"
+            allow="fullscreen"
           />
         </div>
 
@@ -183,7 +184,24 @@ export function ShellDesignFullscreen() {
 
   const ShellPreviewComponent = useMemo(() => {
     if (!shellPreviewLoader) return null
-    return React.lazy(shellPreviewLoader)
+    // Wrap the loader to handle potential export issues
+    return React.lazy(async () => {
+      try {
+        const module = await shellPreviewLoader()
+        // Handle both default and named exports
+        if (module && typeof module.default === 'function') {
+          return module
+        }
+        if (module && typeof (module as any).ShellPreview === 'function') {
+          return { default: (module as any).ShellPreview }
+        }
+        console.error('ShellPreview does not have a valid default export')
+        return { default: () => <div className="h-screen flex items-center justify-center bg-background"><p className="text-stone-600 dark:text-stone-400">Shell preview export error</p></div> }
+      } catch (e) {
+        console.error('Failed to load shell preview:', e)
+        return { default: () => <div className="h-screen flex items-center justify-center bg-background"><p className="text-stone-600 dark:text-stone-400">Failed to load shell preview</p></div> }
+      }
+    })
   }, [shellPreviewLoader])
 
   // Sync theme with parent window

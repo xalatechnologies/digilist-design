@@ -1,0 +1,25 @@
+{
+  "heading": "system",
+  "body": "system",
+  "mono": "system",
+  "_meta": {
+    "description": "DigiList typography tokens based on Designsystemet.no",
+    "base_system": "Designsystemet.no",
+    "font_stack": "System font stack (as defined in Designsystemet)",
+    "note": "No custom webfonts. Uses Designsystemet.no typography without modifications."
+  },
+  "scale": {
+    "heading_lg": "H1",
+    "heading_md": "H2",
+    "heading_sm": "H3",
+    "body": "Body",
+    "body_small": "Small",
+    "label": "Labels, buttons, chips"
+  },
+  "rules": {
+    "no_custom_fonts": "No custom webfonts",
+    "min_text_size": "No text smaller than Small for interactive elements",
+    "preserve_line_height": "Line-height preserved from system",
+    "no_tightening": "Do not 'tighten' text to fit more content"
+  }
+}

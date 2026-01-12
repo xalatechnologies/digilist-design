@@ -49,4 +49,17 @@ export const router = createBrowserRouter([
     path: '/export',
     element: <ExportPage />,
   },
+  // Shell preview routes (for navigation within shell preview)
+  {
+    path: '/search',
+    element: <ShellDesignFullscreen />,
+  },
+  {
+    path: '/my-bookings',
+    element: <ShellDesignFullscreen />,
+  },
+  {
+    path: '/help',
+    element: <ShellDesignFullscreen />,
+  },
 ])

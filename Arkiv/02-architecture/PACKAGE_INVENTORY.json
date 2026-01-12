@@ -1,0 +1,445 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "generatedAt": "2026-01-07T10:00:00.000Z",
+    "source": "Digilist Platform Monorepo Analysis",
+    "requirementsSource": "docs/requirements/requirements.json"
+  },
+  "packages": {
+    "client": [
+      {
+        "name": "@xalatechnologies/ui",
+        "path": "packages/client/ui",
+        "description": "React component library with design tokens",
+        "exports": ["components", "hooks", "motion", "calendar", "theme"],
+        "dependencies": ["@xalatechnologies/design-tokens"],
+        "consumers": ["apps/web", "apps/backoffice", "apps/monitoring", "apps/docs"],
+        "requirements": ["UX-001", "UX-002", "UX-003", "UX-005", "UX-006", "UX-007"]
+      },
+      {
+        "name": "@xalatechnologies/domain-hooks",
+        "path": "packages/client/domain-hooks",
+        "description": "React hooks for domain entities",
+        "exports": ["listings", "booking", "commerce", "users", "approvals", "payments", "comms", "compliance", "messaging"],
+        "dependencies": ["@tanstack/react-query", "@xalatechnologies/domain-contracts"],
+        "consumers": ["apps/web", "apps/backoffice"],
+        "requirements": ["DOM-001", "DOM-002", "DOM-003", "DOM-004", "DOM-005", "DOM-006", "DOM-007", "DOM-010"]
+      },
+      {
+        "name": "@xalatechnologies/platform",
+        "path": "packages/client/platform",
+        "description": "Shared platform layer: shell, auth, RBAC, navigation",
+        "exports": ["shell", "auth-providers", "rbac", "navigation"],
+        "dependencies": ["@xalatechnologies/auth", "@xalatechnologies/i18n"],
+        "consumers": ["apps/web", "apps/backoffice", "apps/monitoring"],
+        "requirements": ["SAAS-003", "SAAS-005", "SEC-001", "SEC-002"]
+      },
+      {
+        "name": "@xalatechnologies/integrations",
+        "path": "packages/client/integrations",
+        "description": "External integration adapters",
+        "exports": ["idporten", "vipps", "visma", "google-calendar", "microsoft-graph", "webhooks"],
+        "dependencies": [],
+        "consumers": ["apps/web", "apps/backoffice"],
+        "requirements": ["INT-001", "INT-002", "INT-003", "INT-004", "SEC-001", "PAY-001"]
+      },
+      {
+        "name": "@xalatechnologies/i18n",
+        "path": "packages/client/i18n",
+        "description": "Localization and translation",
+        "exports": ["useI18n", "I18nProvider", "translations"],
+        "languages": ["nb", "en"],
+        "consumers": ["apps/web", "apps/backoffice", "apps/monitoring"],
+        "requirements": ["UX-004", "OPS-006"]
+      },
+      {
+        "name": "@xalatechnologies/monitoring",
+        "path": "packages/client/monitoring",
+        "description": "Client-side monitoring utilities",
+        "exports": ["analytics", "scanner", "requirements", "realtime"],
+        "consumers": ["apps/monitoring"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/registry",
+        "path": "packages/client/registry",
+        "description": "Route module registry for RBAC routing",
+        "exports": ["routes", "navigation"],
+        "consumers": ["apps/web", "apps/backoffice"],
+        "requirements": ["SAAS-005", "SEC-002"]
+      },
+      {
+        "name": "@xalatechnologies/scanners",
+        "path": "packages/client/scanners",
+        "description": "UI scanner utilities",
+        "exports": [],
+        "consumers": ["apps/monitoring"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/content",
+        "path": "packages/client/content",
+        "description": "MDX content for docs/learning",
+        "exports": [],
+        "consumers": ["apps/docs", "apps/learning-hub"],
+        "requirements": ["OPS-007"]
+      }
+    ],
+    "server": [
+      {
+        "name": "@xalatechnologies/application",
+        "path": "packages/server/application",
+        "description": "Application layer - use cases and orchestration",
+        "exports": ["booking", "listings", "services"],
+        "dependencies": ["@xalatechnologies/domain", "@xalatechnologies/dal"],
+        "consumers": ["apps/api"],
+        "requirements": ["DOM-001", "DOM-002", "DOM-003", "DOM-004", "DOM-005", "ADMIN-001", "ADMIN-002"]
+      },
+      {
+        "name": "@xalatechnologies/services",
+        "path": "packages/server/services",
+        "description": "Business logic services",
+        "exports": ["bookings.service", "listings.service", "payments.service", "pricing"],
+        "dependencies": ["@xalatechnologies/domain", "@xalatechnologies/dal"],
+        "consumers": ["apps/api", "@xalatechnologies/application"],
+        "requirements": ["DOM-003", "DOM-004", "DOM-006", "DOM-008", "DOM-009", "PAY-001"]
+      },
+      {
+        "name": "@xalatechnologies/dal",
+        "path": "packages/server/dal",
+        "description": "Data Access Layer with repository pattern",
+        "exports": ["repositories"],
+        "dependencies": ["@xalatechnologies/data", "drizzle-orm"],
+        "consumers": ["@xalatechnologies/services", "@xalatechnologies/application"],
+        "requirements": ["SAAS-001"]
+      },
+      {
+        "name": "@xalatechnologies/data",
+        "path": "packages/server/data",
+        "description": "Unified database layer with Drizzle ORM",
+        "exports": ["db", "schemas", "migrations", "seeds"],
+        "dependencies": ["drizzle-orm", "postgres"],
+        "consumers": ["@xalatechnologies/dal"],
+        "requirements": ["SAAS-001"]
+      },
+      {
+        "name": "@xalatechnologies/platform-data",
+        "path": "packages/server/platform-data",
+        "description": "Platform layer schemas (tenants, users, RBAC)",
+        "exports": ["schema", "mappers"],
+        "tables": ["tenants", "users", "organizations", "memberships", "roles", "permissions"],
+        "consumers": ["@xalatechnologies/data"],
+        "requirements": ["SAAS-001", "SAAS-002", "SAAS-003", "SAAS-004", "SAAS-005", "SAAS-006"]
+      },
+      {
+        "name": "@xalatechnologies/licensing",
+        "path": "packages/server/licensing",
+        "description": "SaaS licensing and entitlement management",
+        "exports": ["api", "middleware", "services", "repositories"],
+        "consumers": ["apps/api"],
+        "requirements": ["SAAS-007", "SAAS-010", "TND-009"]
+      },
+      {
+        "name": "@xalatechnologies/saas",
+        "path": "packages/server/saas",
+        "description": "SaaS concerns - tenancy, billing, limits",
+        "exports": ["tenancy", "billing", "limits"],
+        "consumers": ["apps/api", "@xalatechnologies/application"],
+        "requirements": ["SAAS-001", "SAAS-007", "OPS-001"]
+      },
+      {
+        "name": "@xalatechnologies/http",
+        "path": "packages/server/http",
+        "description": "HTTP client and error handling",
+        "exports": ["httpClient", "errors", "middleware"],
+        "consumers": ["apps/api", "@xalatechnologies/infrastructure"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/redis",
+        "path": "packages/server/redis",
+        "description": "Redis client and utilities",
+        "exports": ["redisClient", "caching"],
+        "consumers": ["apps/api"],
+        "requirements": ["SEC-002", "SAAS-009"]
+      },
+      {
+        "name": "@xalatechnologies/infrastructure",
+        "path": "packages/server/infrastructure",
+        "description": "Infrastructure layer - external integrations",
+        "exports": ["db"],
+        "consumers": ["@xalatechnologies/application"],
+        "requirements": ["INT-001", "INT-002", "INT-003", "INT-004"]
+      },
+      {
+        "name": "@xalatechnologies/testing",
+        "path": "packages/server/testing",
+        "description": "Testing utilities and requirement scanner",
+        "exports": ["utilities", "semgrep", "schema-analysis"],
+        "consumers": ["tests"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/testing-integration",
+        "path": "packages/server/testing-integration",
+        "description": "Integration test harness",
+        "exports": [],
+        "consumers": ["tests"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/dev-tools",
+        "path": "packages/server/dev-tools",
+        "description": "Development tools and scanners",
+        "exports": ["scenario-seed", "verification", "decoupling"],
+        "consumers": ["scripts"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/ds-governance",
+        "path": "packages/server/ds-governance",
+        "description": "Design system governance framework",
+        "exports": [],
+        "consumers": ["scripts"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/qa-contract",
+        "path": "packages/server/qa-contract",
+        "description": "Standardized QA test contracts",
+        "exports": [],
+        "consumers": ["tests"],
+        "requirements": []
+      }
+    ],
+    "shared": [
+      {
+        "name": "@xalatechnologies/domain",
+        "path": "packages/shared/domain",
+        "description": "Unified business domain - pure business logic",
+        "exports": ["listings", "booking", "approvals", "commerce", "comms", "compliance", "users", "payments", "messaging", "calendar", "forms", "help", "access"],
+        "dependencies": [],
+        "consumers": ["@xalatechnologies/application", "@xalatechnologies/services"],
+        "requirements": ["DOM-001", "DOM-002", "DOM-003", "DOM-004", "DOM-005", "DOM-006", "DOM-007", "DOM-008", "DOM-009", "DOM-010", "DOM-011", "DOM-012", "DOM-013", "DOM-014", "DOM-015", "DOM-016", "DOM-017"]
+      },
+      {
+        "name": "@xalatechnologies/domain-data",
+        "path": "packages/shared/domain-data",
+        "description": "Domain layer Drizzle schemas",
+        "exports": ["listings", "bookings", "allocations", "payments", "forms", "terms"],
+        "dependencies": ["drizzle-orm"],
+        "consumers": ["@xalatechnologies/data"],
+        "requirements": ["DOM-001", "DOM-002", "DOM-003", "DOM-004", "DOM-005", "DOM-006"]
+      },
+      {
+        "name": "@xalatechnologies/domain-contracts",
+        "path": "packages/shared/domain-contracts",
+        "description": "Database-agnostic domain contracts (DTOs, ports)",
+        "exports": ["types", "dtos", "viewModels", "ports"],
+        "dependencies": [],
+        "consumers": ["@xalatechnologies/domain-hooks", "@xalatechnologies/domain"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/auth",
+        "path": "packages/shared/auth",
+        "description": "Authentication - OAuth, sessions, RBAC",
+        "exports": ["lucia", "rbac", "providers", "hooks", "stores"],
+        "consumers": ["apps/api", "@xalatechnologies/platform"],
+        "requirements": ["SEC-001", "SEC-002", "SAAS-005", "SAAS-006"]
+      },
+      {
+        "name": "@xalatechnologies/config",
+        "path": "packages/shared/config",
+        "description": "Global configuration utilities",
+        "exports": ["vite", "vitest", "playwright", "runtime"],
+        "consumers": ["all"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/design-tokens",
+        "path": "packages/shared/design-tokens",
+        "description": "Central design token and component registry",
+        "exports": ["tokens.css", "tailwind-preset", "variables"],
+        "consumers": ["@xalatechnologies/ui"],
+        "requirements": ["UX-005"]
+      },
+      {
+        "name": "@xalatechnologies/requirements",
+        "path": "packages/shared/requirements",
+        "description": "Requirements index, traceability, acceptance criteria",
+        "exports": ["acceptance", "index", "traceability"],
+        "consumers": ["@xalatechnologies/monitoring"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/monitoring-model",
+        "path": "packages/shared/monitoring-model",
+        "description": "Shared monitoring types and models",
+        "exports": ["scan", "finding", "requirement"],
+        "consumers": ["@xalatechnologies/monitoring"],
+        "requirements": []
+      },
+      {
+        "name": "@xalatechnologies/utils",
+        "path": "packages/shared/utils",
+        "description": "Shared utility functions",
+        "exports": [],
+        "consumers": ["all"],
+        "requirements": []
+      }
+    ]
+  },
+  "apiRoutes": {
+    "/auth": {
+      "packages": ["@xalatechnologies/auth"],
+      "requirements": ["SEC-001", "SEC-002"]
+    },
+    "/listings": {
+      "packages": ["@xalatechnologies/application", "@xalatechnologies/services"],
+      "requirements": ["DOM-001", "DOM-002", "DOM-016", "DOM-017"]
+    },
+    "/bookings": {
+      "packages": ["@xalatechnologies/application", "@xalatechnologies/services"],
+      "requirements": ["DOM-003", "DOM-004", "DOM-005", "DOM-006", "DOM-010"]
+    },
+    "/approvals": {
+      "packages": ["@xalatechnologies/application", "@xalatechnologies/domain"],
+      "requirements": ["ADMIN-001"]
+    },
+    "/payments": {
+      "packages": ["@xalatechnologies/services", "@xalatechnologies/integrations"],
+      "requirements": ["PAY-001", "PAY-002", "PAY-003"]
+    },
+    "/users": {
+      "packages": ["@xalatechnologies/platform-data", "@xalatechnologies/auth"],
+      "requirements": ["SAAS-003", "USER-001"]
+    },
+    "/organizations": {
+      "packages": ["@xalatechnologies/platform-data", "@xalatechnologies/saas"],
+      "requirements": ["SAAS-002", "SAAS-004"]
+    },
+    "/admin": {
+      "packages": ["@xalatechnologies/application", "@xalatechnologies/licensing"],
+      "requirements": ["ADMIN-001", "ADMIN-002", "ADMIN-003", "ADMIN-004", "ADMIN-005", "ADMIN-006", "ADMIN-007", "ADMIN-008"]
+    },
+    "/calendar-sync": {
+      "packages": ["@xalatechnologies/integrations"],
+      "requirements": ["INT-004"]
+    },
+    "/webhooks": {
+      "packages": ["@xalatechnologies/integrations"],
+      "requirements": ["INT-001", "INT-002", "INT-003"]
+    },
+    "/reports": {
+      "packages": ["@xalatechnologies/services", "@xalatechnologies/data"],
+      "requirements": ["TND-005", "ADMIN-007"]
+    },
+    "/monitoring": {
+      "packages": ["@xalatechnologies/monitoring", "@xalatechnologies/requirements"],
+      "requirements": []
+    },
+    "/health": {
+      "packages": ["@xalatechnologies/http"],
+      "requirements": ["OPS-002"]
+    },
+    "/notifications": {
+      "packages": ["@xalatechnologies/domain"],
+      "requirements": ["ADMIN-002", "DOM-012"]
+    },
+    "/forms": {
+      "packages": ["@xalatechnologies/domain"],
+      "requirements": ["TND-003"]
+    },
+    "/public": {
+      "packages": ["@xalatechnologies/domain"],
+      "requirements": ["DOM-015", "TND-004"]
+    },
+    "/checkout": {
+      "packages": ["@xalatechnologies/services"],
+      "requirements": ["PAY-001"]
+    }
+  },
+  "requirementsCoverage": {
+    "DOM": {
+      "total": 17,
+      "covered": 17,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/domain", "@xalatechnologies/domain-data", "@xalatechnologies/domain-hooks", "@xalatechnologies/services", "@xalatechnologies/ui"]
+    },
+    "SAAS": {
+      "total": 10,
+      "covered": 10,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/platform-data", "@xalatechnologies/saas", "@xalatechnologies/licensing", "@xalatechnologies/auth"]
+    },
+    "SEC": {
+      "total": 4,
+      "covered": 4,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/auth", "@xalatechnologies/config"]
+    },
+    "INT": {
+      "total": 4,
+      "covered": 2,
+      "partial": 2,
+      "missing": 0,
+      "packages": ["@xalatechnologies/integrations", "@xalatechnologies/infrastructure"]
+    },
+    "PAY": {
+      "total": 3,
+      "covered": 3,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/services", "@xalatechnologies/integrations"]
+    },
+    "UX": {
+      "total": 7,
+      "covered": 7,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/ui", "@xalatechnologies/design-tokens", "@xalatechnologies/i18n"]
+    },
+    "OPS": {
+      "total": 8,
+      "covered": 8,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/saas", "@xalatechnologies/http"]
+    },
+    "TND": {
+      "total": 9,
+      "covered": 9,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/domain", "@xalatechnologies/services", "@xalatechnologies/licensing"]
+    },
+    "ADMIN": {
+      "total": 8,
+      "covered": 8,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/application", "@xalatechnologies/services"]
+    },
+    "USER": {
+      "total": 1,
+      "covered": 1,
+      "partial": 0,
+      "missing": 0,
+      "packages": ["@xalatechnologies/integrations"]
+    }
+  },
+  "summary": {
+    "totalPackages": 33,
+    "clientPackages": 9,
+    "serverPackages": 15,
+    "sharedPackages": 9,
+    "totalRequirements": 71,
+    "coveredRequirements": 69,
+    "partialRequirements": 2,
+    "missingRequirements": 0
+  }
+}

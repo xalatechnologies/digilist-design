@@ -1,0 +1,141 @@
+{
+  "description": "Sample data for Confirmation / Receipt - confirmed and pending approval bookings",
+  "bookings": {
+    "confirmed": {
+      "bookingId": "BK-2025-001234",
+      "status": "confirmed",
+      "statusLabel": "Booking Confirmed",
+      "listing": {
+        "id": "listing-001",
+        "title": "Community Sports Hall",
+        "type": "SPACE",
+        "location": {
+          "address": "Storgata 1, 0182 Oslo",
+          "district": "Grunerløkka"
+        },
+        "image": "/images/sports-hall.jpg"
+      },
+      "bookingDetails": {
+        "bookingModel": "TIME_RANGE",
+        "date": "2025-01-15",
+        "startTime": "19:00",
+        "endTime": "21:00",
+        "duration": 120,
+        "unit": "Main Hall"
+      },
+      "pricing": {
+        "basePrice": 1000,
+        "discount": 0,
+        "vat": 250,
+        "total": 1250,
+        "currency": "NOK",
+        "chargeUnit": "HOUR",
+        "calculation": "2 hours × 500 NOK/hour = 1000 NOK"
+      },
+      "payment": {
+        "status": "paid",
+        "method": "Credit Card",
+        "transactionId": "TXN-2025-001234",
+        "paidAt": "2025-01-12T14:30:00Z"
+      },
+      "nextSteps": {
+        "immediate": [
+          "Your booking is confirmed",
+          "You will receive a confirmation email shortly",
+          "Booking details are saved in 'My Bookings'"
+        ],
+        "beforeEvent": [
+          "You will receive a reminder 24 hours before",
+          "Check-in: Arrive 10 minutes before start time",
+          "Contact: sports@municipality.no or +47 12 34 56 78"
+        ]
+      },
+      "receipt": {
+        "number": "RCP-2025-001234",
+        "issueDate": "2025-01-12",
+        "downloadable": true
+      }
+    },
+    "pendingApproval": {
+      "bookingId": "BK-2025-001235",
+      "status": "pending",
+      "statusLabel": "Pending Approval",
+      "listing": {
+        "id": "listing-003",
+        "title": "Conference Room A",
+        "type": "SPACE",
+        "location": {
+          "address": "Karl Johans gate 1, 0162 Oslo",
+          "district": "Sentrum"
+        },
+        "image": "/images/conference-room.jpg"
+      },
+      "bookingDetails": {
+        "bookingModel": "ALL_DAY",
+        "startDate": "2025-01-20",
+        "endDate": "2025-01-22",
+        "duration": 3,
+        "unit": "Conference Room A"
+      },
+      "pricing": {
+        "estimatedPrice": 6000,
+        "currency": "NOK",
+        "chargeUnit": "DAY",
+        "calculation": "3 days × 2000 NOK/day = 6000 NOK (estimate)"
+      },
+      "payment": {
+        "status": "pending",
+        "required": true,
+        "dueAfterApproval": true
+      },
+      "nextSteps": {
+        "immediate": [
+          "Your application has been submitted",
+          "You will receive a response within 2-3 business days",
+          "Application details are saved in 'My Bookings'"
+        ],
+        "duringApproval": [
+          "We will review your application",
+          "You will be notified via email when a decision is made",
+          "Contact us if you have questions: support@digilist.no"
+        ],
+        "afterApproval": [
+          "If approved, payment will be required",
+          "You will receive confirmation and payment instructions",
+          "Alternative dates may be offered if requested dates unavailable"
+        ]
+      },
+      "approvalTimeline": {
+        "expectedResponse": "2025-01-17",
+        "businessDays": "2-3 business days"
+      },
+      "receipt": {
+        "number": null,
+        "issueDate": null,
+        "downloadable": false,
+        "note": "Receipt will be available after approval"
+      }
+    }
+  },
+  "errorScenarios": {
+    "paymentFailure": {
+      "status": "failed",
+      "statusLabel": "Payment Failed",
+      "reason": "Payment could not be processed",
+      "actions": [
+        "Retry payment",
+        "Try different payment method",
+        "Contact support"
+      ]
+    },
+    "validationFailure": {
+      "status": "failed",
+      "statusLabel": "Booking Failed",
+      "reason": "Selected time slot is no longer available",
+      "actions": [
+        "Return to listing and select different time",
+        "Contact support if issue persists"
+      ]
+    }
+  }
+}

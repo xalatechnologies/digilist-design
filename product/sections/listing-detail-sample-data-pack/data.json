@@ -1,0 +1,528 @@
+{
+  "_meta": {
+    "description": "Realistic sample data pack for Listing Detail UI validation",
+    "purpose": "Provides comprehensive test data covering all booking models and variations"
+  },
+  "listings": [
+    {
+      "id": "listing-space-001",
+      "name": "Møterom 101",
+      "type": "Space",
+      "slug": "moterom-101",
+      "description": "Moderne møterom lokalisert i biblioteket. Egnet for foreninger, lag og mindre arrangementer. Passer godt til møter, kurs, workshops og interne samlinger. Rommet har moderne standard og tilrettelegging for møtevirksomhet. Tilbys for aktiviteter med begrenset antall deltakere.",
+      "location": {
+        "address": "Storgata 1, 0155 Oslo",
+        "coordinates": {
+          "lat": 59.9139,
+          "lng": 10.7522
+        }
+      },
+      "bookingModel": "TIME_RANGE",
+      "capacity": 50,
+      "quantity": null,
+      "images": [
+        {
+          "url": "/images/meeting-room-1.jpg",
+          "alt": "Møterom 101 - hovedbilde med konferansebord",
+          "order": 1
+        },
+        {
+          "url": "/images/meeting-room-2.jpg",
+          "alt": "Møterom 101 - prosjektor og tavle",
+          "order": 2
+        },
+        {
+          "url": "/images/meeting-room-3.jpg",
+          "alt": "Møterom 101 - utsikt fra vindu",
+          "order": 3
+        }
+      ],
+      "facilities": [
+        {
+          "id": "facility-001",
+          "label": "Projektor",
+          "icon": "Projector"
+        },
+        {
+          "id": "facility-002",
+          "label": "WiFi",
+          "icon": "Wifi"
+        },
+        {
+          "id": "facility-003",
+          "label": "Videokonferanse",
+          "icon": "Video"
+        }
+      ],
+      "additionalServices": [
+        {
+          "id": "service-001",
+          "name": "Ekstra tid",
+          "description": "Forleng bookingen med 30 minutter",
+          "price": 200
+        },
+        {
+          "id": "service-002",
+          "name": "Vaktmesterhjelp",
+          "description": "Hjelp med oppsett og nedrigg av utstyr",
+          "price": 300
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule-001",
+          "title": "Røyking forbudt",
+          "category": "SAFETY",
+          "required": true,
+          "description": "Røyking er ikke tillatt i eller utenfor rommet"
+        },
+        {
+          "id": "rule-002",
+          "title": "Rydd opp etter bruk",
+          "category": "CLEANING",
+          "required": true,
+          "description": "Rommet skal etterlates i samme stand som ved ankomst"
+        },
+        {
+          "id": "rule-003",
+          "title": "Maks 50 personer",
+          "category": "BOOKING",
+          "required": false,
+          "description": "Rommet har kapasitet for maksimalt 50 personer"
+        }
+      ],
+      "faq": [
+        {
+          "id": "faq-001",
+          "question": "Hvor lenge i forveien kan jeg booke?",
+          "answer": "Du kan booke opptil 3 måneder i forveien."
+        },
+        {
+          "id": "faq-002",
+          "question": "Kan jeg avbestille bookingen?",
+          "answer": "Ja, du kan avbestille opptil 24 timer før booket tidspunkt."
+        }
+      ],
+      "contact": {
+        "email": "kontakt@digilist.no",
+        "phone": "+47 12 34 56 78"
+      },
+      "openingHours": {
+        "mondayFriday": "08:00 - 22:00",
+        "saturday": "09:00 - 20:00",
+        "sunday": "10:00 - 18:00"
+      },
+      "bookingTimePolicy": {
+        "minDuration": 60,
+        "maxDuration": 480,
+        "leadTime": 1440,
+        "maxAdvanceDays": 90,
+        "bufferBefore": 0,
+        "bufferAfter": 0
+      },
+      "availability": {
+        "2026-01-12": {
+          "08:00": "available",
+          "09:00": "booked",
+          "10:00": "available",
+          "11:00": "available",
+          "12:00": "available",
+          "13:00": "booked",
+          "14:00": "available",
+          "15:00": "available",
+          "16:00": "available"
+        },
+        "2026-01-13": {
+          "08:00": "available",
+          "09:00": "available",
+          "10:00": "available",
+          "11:00": "available",
+          "12:00": "available",
+          "13:00": "available",
+          "14:00": "available",
+          "15:00": "available",
+          "16:00": "available"
+        }
+      }
+    },
+    {
+      "id": "listing-equipment-001",
+      "name": "Lydanlegg",
+      "type": "Equipment",
+      "slug": "lydanlegg",
+      "description": "Profesjonelt lydanlegg for arrangementer og konserter. Inkluderer mikrofoner, forsterkere, høyttalere og miksebord. Perfekt for større arrangementer som krever høy lydkvalitet.",
+      "location": {
+        "address": "Kulturhuset, Torget 5, 3017 Drammen",
+        "coordinates": {
+          "lat": 59.7440,
+          "lng": 10.2040
+        }
+      },
+      "bookingModel": "QUANTITY",
+      "capacity": null,
+      "quantity": 5,
+      "pricePerUnit": 500,
+      "images": [
+        {
+          "url": "/images/sound-system-1.jpg",
+          "alt": "Lydanlegg - hovedbilde",
+          "order": 1
+        },
+        {
+          "url": "/images/sound-system-2.jpg",
+          "alt": "Lydanlegg - miksebord",
+          "order": 2
+        },
+        {
+          "url": "/images/sound-system-3.jpg",
+          "alt": "Lydanlegg - mikrofoner",
+          "order": 3
+        }
+      ],
+      "facilities": [
+        {
+          "id": "facility-004",
+          "label": "Mikrofoner",
+          "icon": "Mic"
+        },
+        {
+          "id": "facility-005",
+          "label": "Miksebord",
+          "icon": "Sliders"
+        }
+      ],
+      "additionalServices": [
+        {
+          "id": "service-003",
+          "name": "Tekniker",
+          "description": "Teknisk personell til stede under arrangementet",
+          "price": 800
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule-004",
+          "title": "Minimum 1 enhet",
+          "category": "BOOKING",
+          "required": true,
+          "description": "Du må booke minst 1 enhet"
+        },
+        {
+          "id": "rule-005",
+          "title": "Maks 5 enheter",
+          "category": "BOOKING",
+          "required": false,
+          "description": "Totalt 5 enheter tilgjengelig"
+        }
+      ],
+      "faq": [
+        {
+          "id": "faq-003",
+          "question": "Hvor mange enheter kan jeg booke?",
+          "answer": "Du kan booke mellom 1 og 5 enheter avhengig av tilgjengelighet."
+        },
+        {
+          "id": "faq-004",
+          "question": "Inkluderer utstyret opplæring?",
+          "answer": "Ja, vi tilbyr opplæring i bruk av utstyret ved behov."
+        }
+      ],
+      "contact": {
+        "email": "utstyr@digilist.no",
+        "phone": "+47 12 34 56 79"
+      },
+      "openingHours": {
+        "mondaySunday": "06:00 - 24:00"
+      },
+      "bookingTimePolicy": {
+        "minDuration": 120,
+        "maxDuration": 1440,
+        "leadTime": 2880,
+        "maxAdvanceDays": 180,
+        "bufferBefore": 0,
+        "bufferAfter": 0
+      },
+      "availability": {
+        "2026-01-12": {
+          "quantity": 3
+        },
+        "2026-01-13": {
+          "quantity": 5
+        }
+      }
+    },
+    {
+      "id": "listing-space-002",
+      "name": "Idrettshall",
+      "type": "Space",
+      "slug": "idrettshall",
+      "description": "Stor idrettshall egnet for fotball, håndball, volleyball og andre idrettsaktiviteter. Hallen har moderne belysning, garderober og tilskuerplasser. Perfekt for treninger, kamper og større arrangementer.",
+      "location": {
+        "address": "Idrettsveien 10, 3018 Drammen",
+        "coordinates": {
+          "lat": 59.7500,
+          "lng": 10.2100
+        }
+      },
+      "bookingModel": "SLOT",
+      "capacity": 200,
+      "quantity": null,
+      "images": [
+        {
+          "url": "/images/sports-hall-1.jpg",
+          "alt": "Idrettshall - hovedbilde",
+          "order": 1
+        },
+        {
+          "url": "/images/sports-hall-2.jpg",
+          "alt": "Idrettshall - garderober",
+          "order": 2
+        },
+        {
+          "url": "/images/sports-hall-3.jpg",
+          "alt": "Idrettshall - tilskuerplasser",
+          "order": 3
+        }
+      ],
+      "facilities": [
+        {
+          "id": "facility-006",
+          "label": "Garderober",
+          "icon": "Users"
+        },
+        {
+          "id": "facility-007",
+          "label": "Tilskuerplasser",
+          "icon": "Users"
+        }
+      ],
+      "additionalServices": [
+        {
+          "id": "service-004",
+          "name": "Dommer",
+          "description": "Dommer til stede for kamper",
+          "price": 600
+        }
+      ],
+      "rules": [
+        {
+          "id": "rule-006",
+          "title": "Faste tidsluker",
+          "category": "BOOKING",
+          "required": true,
+          "description": "Bookinger skjer i faste tidsluker på 1 time"
+        },
+        {
+          "id": "rule-007",
+          "title": "Sesongbasert tilgjengelighet",
+          "category": "BOOKING",
+          "required": false,
+          "description": "Tilgjengelighet varierer etter sesong"
+        }
+      ],
+      "faq": [
+        {
+          "id": "faq-005",
+          "question": "Hvilke tidsluker er tilgjengelige?",
+          "answer": "Tidsluker er på 1 time og starter på hele timer (08:00, 09:00, osv.)."
+        },
+        {
+          "id": "faq-006",
+          "question": "Er hallen tilgjengelig hele året?",
+          "answer": "Hallen har sesongbasert tilgjengelighet. Sjekk kalenderen for detaljer."
+        }
+      ],
+      "contact": {
+        "email": "idrett@digilist.no",
+        "phone": "+47 12 34 56 80"
+      },
+      "openingHours": {
+        "mondayFriday": "06:00 - 23:00",
+        "saturday": "08:00 - 22:00",
+        "sunday": "08:00 - 20:00"
+      },
+      "bookingTimePolicy": {
+        "slotStepMinutes": 60,
+        "minDuration": 60,
+        "maxDuration": 120,
+        "leadTime": 720,
+        "maxAdvanceDays": 60,
+        "bufferBefore": 0,
+        "bufferAfter": 0
+      },
+      "availability": {
+        "2026-01-12": {
+          "08:00": "available",
+          "09:00": "booked",
+          "10:00": "available",
+          "11:00": "maintenance",
+          "12:00": "available",
+          "13:00": "booked",
+          "14:00": "booked",
+          "15:00": "available",
+          "16:00": "available"
+        },
+        "2026-01-13": {
+          "08:00": "available",
+          "09:00": "available",
+          "10:00": "available",
+          "11:00": "available",
+          "12:00": "available",
+          "13:00": "available",
+          "14:00": "available",
+          "15:00": "available",
+          "16:00": "available"
+        }
+      },
+      "seasonalBlocks": [
+        {
+          "startDate": "2026-06-01",
+          "endDate": "2026-08-31",
+          "reason": "Sommerferie - begrenset tilgjengelighet"
+        }
+      ]
+    },
+    {
+      "id": "listing-service-001",
+      "name": "Arrangementspakke",
+      "type": "Service",
+      "slug": "arrangementspakke",
+      "description": "Komplett arrangementspakke som inkluderer utstyr, personell og koordinering. Perfekt for større arrangementer som krever profesjonell oppfølging. Pakken inkluderer lydanlegg, belysning, sceneoppsett og teknisk personell.",
+      "location": {
+        "address": "Arrangementsenteret, Festplassen 1, 3019 Drammen",
+        "coordinates": {
+          "lat": 59.7550,
+          "lng": 10.2150
+        }
+      },
+      "bookingModel": "PACKAGE",
+      "capacity": null,
+      "quantity": null,
+      "images": [
+        {
+          "url": "/images/event-package-1.jpg",
+          "alt": "Arrangementspakke - hovedbilde",
+          "order": 1
+        },
+        {
+          "url": "/images/event-package-2.jpg",
+          "alt": "Arrangementspakke - sceneoppsett",
+          "order": 2
+        },
+        {
+          "url": "/images/event-package-3.jpg",
+          "alt": "Arrangementspakke - teknisk personell",
+          "order": 3
+        }
+      ],
+      "facilities": [
+        {
+          "id": "facility-008",
+          "label": "Lydanlegg",
+          "icon": "Music"
+        },
+        {
+          "id": "facility-009",
+          "label": "Belysning",
+          "icon": "Lightbulb"
+        },
+        {
+          "id": "facility-010",
+          "label": "Teknisk personell",
+          "icon": "Users"
+        }
+      ],
+      "additionalServices": [],
+      "packageContents": [
+        {
+          "id": "package-item-001",
+          "name": "Lydanlegg",
+          "description": "Komplett lydanlegg med mikrofoner og forsterkere"
+        },
+        {
+          "id": "package-item-002",
+          "name": "Belysning",
+          "description": "Profesjonell scenebelysning"
+        },
+        {
+          "id": "package-item-003",
+          "name": "Teknisk personell",
+          "description": "2 teknikere til stede under hele arrangementet"
+        },
+        {
+          "id": "package-item-004",
+          "name": "Koordinering",
+          "description": "Arrangementskoordinator for oppfølging"
+        }
+      ],
+      "packagePrice": 5000,
+      "rules": [
+        {
+          "id": "rule-008",
+          "title": "Minimum 4 timer",
+          "category": "BOOKING",
+          "required": true,
+          "description": "Pakken må bookes for minimum 4 timer"
+        },
+        {
+          "id": "rule-009",
+          "title": "Avbestilling 7 dager i forveien",
+          "category": "BOOKING",
+          "required": true,
+          "description": "Avbestilling må skje minst 7 dager før arrangementet"
+        }
+      ],
+      "faq": [
+        {
+          "id": "faq-007",
+          "question": "Hva inkluderer pakken?",
+          "answer": "Pakken inkluderer lydanlegg, belysning, teknisk personell og koordinering."
+        },
+        {
+          "id": "faq-008",
+          "question": "Kan jeg legge til ekstra tjenester?",
+          "answer": "Ja, du kan legge til ekstra tjenester ved booking."
+        }
+      ],
+      "contact": {
+        "email": "arrangement@digilist.no",
+        "phone": "+47 12 34 56 81"
+      },
+      "openingHours": {
+        "mondaySunday": "06:00 - 24:00"
+      },
+      "bookingTimePolicy": {
+        "minDuration": 240,
+        "maxDuration": 1440,
+        "leadTime": 10080,
+        "maxAdvanceDays": 365,
+        "bufferBefore": 0,
+        "bufferAfter": 0
+      },
+      "availability": {
+        "2026-01-12": {
+          "08:00": "available",
+          "09:00": "available",
+          "10:00": "booked",
+          "11:00": "booked",
+          "12:00": "available",
+          "13:00": "available",
+          "14:00": "available",
+          "15:00": "available",
+          "16:00": "available"
+        },
+        "2026-01-13": {
+          "08:00": "available",
+          "09:00": "available",
+          "10:00": "available",
+          "11:00": "available",
+          "12:00": "available",
+          "13:00": "available",
+          "14:00": "available",
+          "15:00": "available",
+          "16:00": "available"
+        }
+      }
+    }
+  ]
+}

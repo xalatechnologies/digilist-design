@@ -16,12 +16,18 @@ export function ThemeToggle() {
     const root = document.documentElement
 
     const applyTheme = (theme: Theme) => {
+      let isDark = false
       if (theme === 'system') {
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        root.classList.toggle('dark', systemDark)
+        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
       } else {
-        root.classList.toggle('dark', theme === 'dark')
+        isDark = theme === 'dark'
       }
+      
+      // Tailwind dark mode
+      root.classList.toggle('dark', isDark)
+      
+      // designsystemet.no dark mode
+      root.setAttribute('data-theme', isDark ? 'dark' : 'light')
     }
 
     applyTheme(theme)

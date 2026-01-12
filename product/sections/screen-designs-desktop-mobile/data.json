@@ -1,0 +1,10 @@
+{
+  "_meta": {
+    "description": "Screen design data - references sample data from Section 3",
+    "purpose": "Uses listing data from listing-detail-sample-data-pack section",
+    "note": "This data references the first listing (Conference Room) from Section 3 for demonstration"
+  },
+  "listingId": "listing-space-001",
+  "referenceSection": "listing-detail-sample-data-pack",
+  "note": "Screen designs use sample data from Section 3 - Listing Detail Sample Data Pack. The Conference Room listing (TIME_RANGE booking model) is used as the primary example."
+}
